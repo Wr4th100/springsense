@@ -4,7 +4,7 @@ import {
   type DefaultSession,
   type NextAuthOptions,
 } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
+import GoogleProvider from "next-auth/providers/google";
 
 import { env } from "@/env";
 import { db } from "@/server/db";
@@ -37,6 +37,22 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
+    jwt: async ({ token, user }) => {
+      const dbUser = await db.user.findUnique({
+        where: { id: user.id },
+      });
+      if (!dbUser) {
+        token.id = user.id;
+        return token;
+      }
+      return {
+        id: dbUser.id,
+        name: dbUser.name,
+        email: dbUser.email,
+        picture: dbUser.image,
+      };
+    },
+
     session: ({ session, user }) => ({
       ...session,
       user: {
@@ -44,12 +60,19 @@ export const authOptions: NextAuthOptions = {
         id: user.id,
       },
     }),
+
+    redirect: () => {
+      return "/admin/dashboard";
+    },
+  },
+  pages: {
+    signIn: "/admin/login",
   },
   adapter: PrismaAdapter(db),
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
     /**
      * ...add more providers here.
