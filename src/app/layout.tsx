@@ -1,9 +1,12 @@
-import "@/styles/globals.css";
+import "@/app/globals.css";
+import "leaflet/dist/leaflet.css";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 
 import { TRPCReactProvider } from "@/trpc/react";
+// import { SocketProvider } from "@/components/providers/SocketProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,7 +28,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
-          {children}
+          {/* <SocketProvider> */}
+            {children}
+          {/* </SocketProvider> */}
         </TRPCReactProvider>
       </body>
     </html>

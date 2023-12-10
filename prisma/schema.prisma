@@ -72,3 +72,54 @@ model VerificationToken {
     @@unique([identifier, token])
 }
 
+// SpringShed
+// - Location (coordinates)
+// - ph
+// - temp
+// - turbidity
+// - dissolved_oxygen
+// - water level
+
+// Weather Station
+// - humidity
+// - rainfall
+// - wind speed
+// - solar radiation sensor
+
+model SpringShed {
+    id               Int      @id @default(autoincrement())
+    name             String
+    location         Location @relation(fields: [locationId], references: [id])
+    locationId       Int
+    ph               Float
+    temp             Float
+    turbidity        Float
+    dissolved_oxygen Float
+    water_level      Float
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @updatedAt
+}
+
+model WeatherStation {
+    id              Int      @id @default(autoincrement())
+    name            String
+    location        Location @relation(fields: [locationId], references: [id])
+    locationId      Int
+    humidity        Float
+    rainfall        Float
+    wind_speed      Float
+    solar_radiation Float
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+}
+
+model Location {
+    id        Int      @id @default(autoincrement())
+    name      String
+    latitude  Float
+    longitude Float
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    SpringShed     SpringShed[]
+    WeatherStation WeatherStation[]
+}
