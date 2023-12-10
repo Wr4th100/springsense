@@ -56,9 +56,7 @@ const data = [
   },
 ];
 
-export default function SampleChart() {
-  const demoUrl = "https://codesandbox.io/s/bar-chart-has-background-62zcd";
-
+export default function SampleBarChart() {
   return (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart

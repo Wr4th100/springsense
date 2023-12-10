@@ -5,10 +5,10 @@ import parseKML from "parse-kml"; // eslint-disable-line
 export async function POST(req: NextRequest) {
   let kmlStuff;
   console.log("=== POST ===");
-  const file = JSON.parse(await req.text());
-  console.log(file.kmlFile);
+  const file = JSON.parse(await req.text()); // eslint-disable-line
+  console.log(file.kmlFile); // eslint-disable-line
 
-  await parseKML.toJson(file.kmlFile).then((res) => {
+  await parseKML.toJson(file.kmlFile).then((res) => { // eslint-disable-line
     kmlStuff = res;
   });
   return NextResponse.json(kmlStuff);

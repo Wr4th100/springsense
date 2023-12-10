@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import {
   flexRender,
   getCoreRowModel,
@@ -26,20 +25,15 @@ import {
   ChevronsLeft,
   ChevronsRight,
   Download,
-  Edit,
   MoreVertical,
-  PlusCircle,
   SlidersHorizontal,
-  Trash2,
   View,
 } from "lucide-react";
-import toast from "react-hot-toast";
 import { utils, writeFile } from "xlsx";
 import type { WorkBook } from "xlsx";
 
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -73,21 +67,14 @@ interface Props {
 }
 
 const AdminSpringTable = (props: Props) => {
-  const router = useRouter();
-  const pathname = usePathname();
-
   const getSpring = api.spring.findAllAdminPanel.useQuery(undefined, {
     initialData: props.data,
     refetchOnMount: false,
     refetchOnReconnect: false,
   });
-
-  const [isPending, startTransition] = React.useTransition();
-
   const columns: ColumnDef<
     RouterOutputs["spring"]["findAllAdminPanel"][number]
   >[] = [
-
     {
       accessorKey: "id",
       header: "ID",
@@ -153,7 +140,7 @@ const AdminSpringTable = (props: Props) => {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const data = React.useMemo(() => props.data, [props.data]);
+  const data = React.useMemo(() => getSpring.data, [getSpring.data]);
   const table = useReactTable({
     data,
     columns,
@@ -217,60 +204,6 @@ const AdminSpringTable = (props: Props) => {
           </DropdownMenu>
         </div>
         <div className="flex items-center gap-x-2 ">
-          {table.getFilteredSelectedRowModel().rows.length === 0 ? (
-            <Button
-              aria-label="Add new product"
-              size="sm"
-              className=""
-              onClick={() => router.push(`${pathname}/create`)}
-            >
-              <PlusCircle className="mr-2 h-4 w-4" />
-              <span className="hidden lg:inline-block">New Springs</span>
-              <span className="inline-block lg:hidden">New</span>
-            </Button>
-          ) : (
-            <Button
-              aria-label="Delete selected rows"
-              variant="destructive"
-              size="sm"
-              className=""
-              onClick={() => {
-                startTransition(() => {
-                  try {
-                    // table.getSelectedRowModel().rows.map(
-                    //   async (row) =>
-                    //     await deleteSpring.mutateAsync({
-                    //       id: row.original.id,
-                    //     }),
-                    // );
-                    router.refresh();
-                  } catch (error) {
-                    error instanceof Error
-                      ? toast.error(error.message)
-                      : toast.error("Something went wrong");
-                  }
-                  2;
-                  table.resetRowSelection();
-                });
-              }}
-              disabled={!table.getSelectedRowModel().rows.length || isPending}
-            >
-              <Trash2 className="mr-2 h-4 w-4" aria-hidden />
-              Delete ({table.getSelectedRowModel().rows.length})
-            </Button>
-          )}
-
-          <Button
-            variant="outline"
-            onClick={() => {
-              table.resetColumnFilters();
-              table.resetSorting();
-              table.resetRowSelection();
-            }}
-          >
-            Reset
-          </Button>
-
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
@@ -331,7 +264,7 @@ const AdminSpringTable = (props: Props) => {
                       id: row.original.id,
                       ph: row.original.ph,
                       temperature: row.original.temperature,
-                      turbudity: row.original.turbudity,
+                      turbidity: row.original.turbudity,
                       dissolved_oxygen: row.original.dissolved_oxygen,
                       water_level: row.original.water_level,
                     };
@@ -343,50 +276,33 @@ const AdminSpringTable = (props: Props) => {
                   });
                   utils.sheet_add_aoa(
                     worksheet,
-                    [["ID", "Name", "Products", "Created At"]],
+                    [
+                      [
+                        "ID",
+                        "pH Level",
+                        "Temperature",
+                        "Turbidity",
+                        "Dissolved Oxygen",
+                        "Water Level",
+                      ],
+                    ],
                     { origin: "A1" },
                   );
-                  // const max_width_id = rows.reduce(
-                  //   (w, r) => Math.max(w, String(r.original.id).length),
-                  //   10,
-                  // );
-                  // const max_width_name = rows.reduce(
-                  //   (w, r) => Math.max(w, r.original.name.length),
-                  //   10,
-                  // );
+                  const max_width_id = rows.reduce(
+                    (w, r) => Math.max(w, String(r.original.id).length),
+                    10,
+                  );
 
-                  // const max_width_month = rows.reduce(
-                  //   (w, r) => Math.max(w, String(r.original.month).length),
-                  //   10,
-                  // );
+                  const col_width = [
+                    { wch: max_width_id },
+                    { wch: 20 },
+                    { wch: 20 },
+                    { wch: 20 },
+                    { wch: 20 },
+                    { wch: 20 },
+                  ];
 
-                  // const max_width_year = rows.reduce(
-                  //   (w, r) => Math.max(w, String(r.original.year).length),
-                  //   10,
-                  // );
-
-                  // const max_width_createdAt = rows.reduce(
-                  //   (w, r) =>
-                  //     Math.max(w, r.original.createdAt.toLocaleString().length),
-                  //   10,
-                  // );
-
-                  // const max_width_updatedAt = rows.reduce(
-                  //   (w, r) =>
-                  //     Math.max(w, r.original.updatedAt.toLocaleString().length),
-                  //   10,
-                  // );
-
-                  // const col_width = [
-                  //   { wch: max_width_id },
-                  //   { wch: max_width_name },
-                  //   { wch: max_width_month },
-                  //   { wch: max_width_year },
-                  //   { wch: max_width_createdAt },
-                  //   { wch: max_width_updatedAt },
-                  // ];
-
-                  // worksheet["!cols"] = col_width;
+                  worksheet["!cols"] = col_width;
                   workbook.SheetNames.push("All Categories");
                   workbook.Sheets["All Categories"] = worksheet;
 

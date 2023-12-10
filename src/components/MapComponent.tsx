@@ -15,8 +15,8 @@ import ReactLeafletKml from "react-leaflet-kml";
 import "leaflet-defaulticon-compatibility";
 import useSpring from "@/hooks/use-spring";
 import type { KmlJSON } from "@/types";
+import { capitalizeAllCaseWords } from "@/lib/utils";
 
-// eslint-disable-next-line
 const MapComponent = () => {
   const springStore = useSpring();
   const [kml, setKml] = React.useState<Document>();
@@ -37,7 +37,7 @@ const MapComponent = () => {
         body: JSON.stringify({ kmlFile: "./public/BOUNDARYOFHILL1.kml" }),
         headers: { "Content-Type": "application/json" },
       });
-      const resJSON = (await resJS.json()) as KmlJSON; // eslint-disable-line
+      const resJSON = (await resJS.json()) as KmlJSON;
       console.log("resJSON", resJSON);
       console.log("coor", resJSON.features[0]?.geometry.coordinates);
       setKmlJSON(resJSON);
@@ -46,16 +46,17 @@ const MapComponent = () => {
   }, []);
 
   return (
-    <div className="rounded border">
+    <div className="rounded-md border">
       <MapContainer
         center={[10.11217445031641, 78.23546193193022]}
-        zoom={12}
+        zoom={13}
         scrollWheelZoom={false}
-        style={{ width: "100%", height: "500px" }}
+        className="h-[700px] w-full rounded-md"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          className="rounded-md"
         />
         {kml && <ReactLeafletKml kml={kml} />}
         {kmlJSON
@@ -70,10 +71,12 @@ const MapComponent = () => {
                   key={index}
                 >
                   <Popup>
-                    <span>{feature.properties.name}</span>
+                    <span className="text-lg font-bold">
+                      {capitalizeAllCaseWords(feature.properties.name)}
+                    </span>
                     <p>
-                      {feature.geometry.coordinates[1]},{" "}
-                      {feature.geometry.coordinates[0]}
+                      ({feature.geometry.coordinates[1]},{" "}
+                      {feature.geometry.coordinates[0]})
                     </p>
                     <Button
                       onClick={() => {
