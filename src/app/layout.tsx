@@ -2,16 +2,22 @@ import "@/app/globals.css";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
+
 import { cookies } from "next/headers";
 
 import { TRPCReactProvider } from "@/trpc/react";
 // import { SocketProvider } from "@/components/providers/SocketProvider";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+// const inter = Inter({
+//   subsets: ["latin"],
+//   variable: "--font-sans",
+// });
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+
+})
 
 export const metadata = {
   title: "Create T3 App",
@@ -26,7 +32,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
+      <body className={`${montserrat.className}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
           {/* <SocketProvider> */}
             {children}

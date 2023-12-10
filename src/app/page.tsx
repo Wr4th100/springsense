@@ -1,6 +1,9 @@
 // "use client";
 import SpringDetails from "@/components/SpringDetails";
 // import Link from "next/link";
+import SampleChart from "@/components/ui/charts/chart";
+import AdminSpringTable from "@/components/table/main-page";
+import Header from "@/components/header";
 
 // import { CreatePost } from "@/app/_components/create-post";
 // import { getServerAuthSession } from "@/server/auth";
