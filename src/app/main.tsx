@@ -19,7 +19,7 @@ const MapComp = dynamic(() => import("@/components/MapComponent"), {
   ssr: false,
 });
 
-export default function Home() {
+export default function Main() {
   return (
     <div>
       

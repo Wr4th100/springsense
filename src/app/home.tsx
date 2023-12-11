@@ -2,10 +2,14 @@
 import React, { useState, useEffect } from "react";
 import HomeChart from "@/components/charts/HomeChart";
 import { Button } from "@/components/ui/button";
+import Main from "./main";
+import { Nav } from "@/components/header/Menu";
+
 
 const HomePage = () => {
   return (
     <div>
+      <Nav/>
       <div className="flex justify-center">
         <h1 className="inline-block  bg-gradient-to-r from-cyan-500 via-blue-300 to-blue-500 bg-clip-text pt-9 text-5xl font-extrabold text-transparent">
           Welcome to Springshed Management Dashboard
@@ -25,8 +29,8 @@ const HomePage = () => {
       <div>
         <HomeChart />
       </div>
-      <div className="flex items-center">
-        <Button variant="outline">View Map</Button>
+      <div className="">
+        <Button variant="outline" onClick={Main}>View Map</Button>
       </div>
     </div>
   );
