@@ -34,7 +34,7 @@ const MapComponent = () => {
       setKml(kmlStuff);
       const resJS = await fetch("/api/kml", {
         method: "POST",
-        body: JSON.stringify({ kmlFile: "./src/files/BOUNDARYOFHILL1.kml" }),
+        body: JSON.stringify({ kmlFile: "https://uploadthing.com/f/ed4e6fba-fd00-4e67-853b-51310547e60d-uoil8l.kml" }),
         headers: { "Content-Type": "application/json" },
       });
       const resJSON = (await resJS.json()) as KmlJSON;
