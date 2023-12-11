@@ -101,7 +101,7 @@ const AdminSpringTable = (props: Props) => {
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const vendor = row.original;
+        // const vendor = row.original;
 
         return (
           <DropdownMenu>
@@ -115,7 +115,7 @@ const AdminSpringTable = (props: Props) => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[150px]">
-              <DropdownMenuItem asChild>
+              {/* <DropdownMenuItem asChild>
                 <Link href={`/vendor/profile/${vendor.id}`}>
                   <View
                     className="mr-2 h-3.5 w-3.5 text-muted-foreground/70"
@@ -123,7 +123,7 @@ const AdminSpringTable = (props: Props) => {
                   />
                   View
                 </Link>
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
               <DropdownMenuSeparator />
             </DropdownMenuContent>
           </DropdownMenu>
@@ -286,13 +286,13 @@ const AdminSpringTable = (props: Props) => {
                     ],
                     { origin: "A1" },
                   );
-                  const max_width_id = rows.reduce(
-                    (w, r) => Math.max(w, String(r.original.id).length),
-                    10,
-                  );
+                  // const max_width_id = rows.reduce(
+                  //   (w, r) => Math.max(w, String(r.original.id).length),
+                  //   10,
+                  // );
 
                   const col_width = [
-                    { wch: max_width_id },
+                    // { wch: max_width_id },
                     { wch: 20 },
                     { wch: 20 },
                     { wch: 20 },
