@@ -92,8 +92,8 @@ const AdminSpringTable = (props: Props) => {
       header: "Dissolved Oxygen",
     },
     {
-      accessorKey: "water_level",
-      header: "Water Level",
+      accessorKey: "water_flow",
+      header: "Water Flow",
     },
 
     {
@@ -244,7 +244,7 @@ const AdminSpringTable = (props: Props) => {
                         row.original.temperature,
                         row.original.turbudity,
                         row.original.dissolved_oxygen,
-                        row.original.water_level,
+                        row.original.water_flow,
                       ];
                     }),
                   });
@@ -266,7 +266,7 @@ const AdminSpringTable = (props: Props) => {
                       temperature: row.original.temperature,
                       turbidity: row.original.turbudity,
                       dissolved_oxygen: row.original.dissolved_oxygen,
-                      water_level: row.original.water_level,
+                      water_level: row.original.water_flow,
                     };
                   });
                   console.log("CSV", csv);
@@ -283,7 +283,7 @@ const AdminSpringTable = (props: Props) => {
                         "Temperature",
                         "Turbidity",
                         "Dissolved Oxygen",
-                        "Water Level",
+                        "Water Flow",
                       ],
                     ],
                     { origin: "A1" },

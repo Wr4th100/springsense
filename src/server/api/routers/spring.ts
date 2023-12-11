@@ -15,7 +15,7 @@ export const springRouter = createTRPCRouter({
         temperature: 23,
         turbudity: 13,
         dissolved_oxygen: 10,
-        water_level: 25,
+        water_flow: 25,
       },
       {
         id: 2,
@@ -23,7 +23,7 @@ export const springRouter = createTRPCRouter({
         temperature: 25,
         turbudity: 10,
         dissolved_oxygen: 15,
-        water_level: 30,
+        water_flow: 30,
       },
       {
         id: 3,
@@ -31,7 +31,7 @@ export const springRouter = createTRPCRouter({
         temperature: 32,
         turbudity: 13,
         dissolved_oxygen: 12,
-        water_level: 28,
+        water_flow: 28,
       },
       {
         id: 4,
@@ -39,7 +39,7 @@ export const springRouter = createTRPCRouter({
         temperature: 28,
         turbudity: 11,
         dissolved_oxygen: 10,
-        water_level: 35,
+        water_flow: 35,
       },
       {
         id: 5,
@@ -47,7 +47,7 @@ export const springRouter = createTRPCRouter({
         temperature: 36,
         turbudity: 8,
         dissolved_oxygen: 19,
-        water_level: 27,
+        water_flow: 27,
       },
     ];
   }),
