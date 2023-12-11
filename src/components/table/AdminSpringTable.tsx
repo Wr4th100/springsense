@@ -75,17 +75,17 @@ const AdminSpringTable = (props: Props) => {
   const columns: ColumnDef<
     RouterOutputs["spring"]["findAllAdminPanel"][number]
   >[] = [
-    {
-      accessorKey: "id",
-      header: "ID",
-    },
-    {
+      {
       accessorKey: "temperature",
       header: "Temperature",
     },
     {
       accessorKey: "turbudity",
       header: "Turbudity",
+    },
+    {
+      accessorKey: "ph",
+      header: "pH",
     },
     {
       accessorKey: "dissolved_oxygen",
@@ -239,7 +239,6 @@ const AdminSpringTable = (props: Props) => {
                     ],
                     body: rows.map((row) => {
                       return [
-                        row.original.id,
                         row.original.ph,
                         row.original.temperature,
                         row.original.turbudity,
@@ -261,7 +260,6 @@ const AdminSpringTable = (props: Props) => {
                       : table.getFilteredRowModel().rows;
                   const csv = rows.map((row) => {
                     return {
-                      id: row.original.id,
                       ph: row.original.ph,
                       temperature: row.original.temperature,
                       turbidity: row.original.turbudity,
@@ -283,7 +281,7 @@ const AdminSpringTable = (props: Props) => {
                         "Temperature",
                         "Turbidity",
                         "Dissolved Oxygen",
-                        "Water Flow",
+                        "Water ",
                       ],
                     ],
                     { origin: "A1" },

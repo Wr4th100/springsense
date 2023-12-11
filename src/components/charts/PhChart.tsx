@@ -6,25 +6,10 @@ import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from "recharts";
 
 // type Props = {}
 
-type Props = {
-  quality:
-    | "pH"
-    | "Turbidity"
-    | "WaterLevel"
-    | "Temperature"
-    | "DissolvedOxygen";
-};
-
-interface GraphResult {
-  date: string;
-  value: number;
-}
-const SpringLineChart = ({ quality }: Props) => {
-  const [graphData, setGraphData] = useState<GraphResult[]>();
+const PhLineChart = () => {  
 
   const phQuery = api.spring.findAllPh.useQuery();
-  const turbidityQuery = api.spring.findAllTurbidity.useQuery();
-
+  
   return (
     <LineChart
       width={330}
@@ -36,10 +21,10 @@ const SpringLineChart = ({ quality }: Props) => {
       <XAxis dataKey="date" />
       <YAxis />
       <Legend />
-      <Line type="monotone" dataKey="value" stroke="#8884d8" />
+      <Line type="monotone" dataKey="pH" stroke="#8884d8" />
       {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
     </LineChart>
   );
 };
 
-export default SpringLineChart;
+export default PhLineChart;

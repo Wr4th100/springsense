@@ -8,6 +8,18 @@ import { api } from "@/trpc/react";
 import AdminSpringTable from "./table/AdminSpringTable";
 import { Loader2 } from "lucide-react";
 import SpringAreaChart from "./charts/SpringAreaChart";
+import PhLineChart from "./charts/PhChart";
+import TurbidityLineChart from "./charts/Turbidity";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import TempLineChart from "./charts/TempChart";
+import DOLineChart from "./charts/DOChart";
+import WaterFlowLineChart from "./charts/WaterFlowChart";
+
 
 const SpringDetails = () => {
   const springStore = useSpring();
@@ -31,12 +43,46 @@ const SpringDetails = () => {
             <p className="text-lg font-bold">Water Quality</p>
           </div>
           <div className="my-8 flex md:space-x-4 space-y-4 space-x-0 md:space-y-0 flex-col md:flex-row">
-            <div className="w-full md:w-1/2">
-              <SpringLineChart />
+          <Accordion type="single" collapsible  className="w-full px-8">
+  <AccordionItem value="item-1">
+    <AccordionTrigger>pH Analysis</AccordionTrigger>
+    <AccordionContent>
+      <PhLineChart/>
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-2">
+    <AccordionTrigger>Turbidity Analysis</AccordionTrigger>
+    <AccordionContent>
+      <TurbidityLineChart/>
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-3">
+    <AccordionTrigger>Temperature Analysis</AccordionTrigger>
+    <AccordionContent>
+      <TempLineChart/>
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-4">
+    <AccordionTrigger>Dissolved Oxygen Analysis</AccordionTrigger>
+    <AccordionContent>
+      <DOLineChart/>
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-5">
+    <AccordionTrigger>Water Flow Analysis</AccordionTrigger>
+    <AccordionContent>
+      <WaterFlowLineChart/>
+    </AccordionContent>
+  </AccordionItem>
+  
+</Accordion>
+
+            {/* <div className="w-full md:w-1/2">
+              <PhLineChart/>
             </div>
             <div className="w-full md:w-1/2">
-              <SpringAreaChart />
-            </div>
+              <TurbidityLineChart/>
+            </div> */}
           </div>
           <div className="mt-4">
             <AdminSpringTable data={springData!} />
