@@ -29,11 +29,11 @@ export default function Home() {
             Azhagar Hill SpringShed
           </p>
         </div>
-        <div className="flex space-x-4">
-          <div className="w-1/2">
+        <div className="flex md:space-x-4 space-y-4 space-x-0 md:space-y-0 flex-col md:flex-row">
+          <div className="w-full md:w-1/2">
             <MapComp />
           </div>
-          <div className="w-1/2">
+          <div className="w-full md:w-1/2">
             <SpringDetails />
           </div>
         </div>

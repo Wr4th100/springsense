@@ -30,11 +30,11 @@ const SpringDetails = () => {
           <div className="mt-4">
             <p className="text-lg font-bold">Water Quality</p>
           </div>
-          <div className="my-8 flex w-full">
-            <div className="w-1/2">
+          <div className="my-8 flex md:space-x-4 space-y-4 space-x-0 md:space-y-0 flex-col md:flex-row">
+            <div className="w-full md:w-1/2">
               <SpringLineChart />
             </div>
-            <div className="w-1/2">
+            <div className="w-full md:w-1/2">
               <SpringAreaChart />
             </div>
           </div>

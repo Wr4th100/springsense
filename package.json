@@ -30,6 +30,7 @@
     "@trpc/server": "^10.43.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "copy-webpack-plugin": "^11.0.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.0",
     "leaflet": "1.9.4",

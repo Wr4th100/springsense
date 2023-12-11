@@ -34,7 +34,7 @@ const MapComponent = () => {
       setKml(kmlStuff);
       const resJS = await fetch("/api/kml", {
         method: "POST",
-        body: JSON.stringify({ kmlFile: "./public/BOUNDARYOFHILL1.kml" }),
+        body: JSON.stringify({ kmlFile: "./src/files/BOUNDARYOFHILL1.kml" }),
         headers: { "Content-Type": "application/json" },
       });
       const resJSON = (await resJS.json()) as KmlJSON;
@@ -51,7 +51,7 @@ const MapComponent = () => {
         center={[10.11217445031641, 78.23546193193022]}
         zoom={13}
         scrollWheelZoom={false}
-        className="h-[700px] w-full rounded-md"
+        className="h-[400px] md:h-[700px] w-full rounded-md"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
