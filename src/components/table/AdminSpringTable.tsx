@@ -75,11 +75,7 @@ const AdminSpringTable = (props: Props) => {
   const columns: ColumnDef<
     RouterOutputs["spring"]["findAllAdminPanel"][number]
   >[] = [
-    {
-      accessorKey: "id",
-      header: "ID",
-    },
-    {
+      {
       accessorKey: "temperature",
       header: "Temperature",
     },
@@ -88,12 +84,16 @@ const AdminSpringTable = (props: Props) => {
       header: "Turbudity",
     },
     {
+      accessorKey: "ph",
+      header: "pH",
+    },
+    {
       accessorKey: "dissolved_oxygen",
       header: "Dissolved Oxygen",
     },
     {
-      accessorKey: "water_level",
-      header: "Water Level",
+      accessorKey: "water_flow",
+      header: "Water Flow",
     },
 
     {
@@ -101,7 +101,7 @@ const AdminSpringTable = (props: Props) => {
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const vendor = row.original;
+        // const vendor = row.original;
 
         return (
           <DropdownMenu>
@@ -115,7 +115,7 @@ const AdminSpringTable = (props: Props) => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[150px]">
-              <DropdownMenuItem asChild>
+              {/* <DropdownMenuItem asChild>
                 <Link href={`/vendor/profile/${vendor.id}`}>
                   <View
                     className="mr-2 h-3.5 w-3.5 text-muted-foreground/70"
@@ -123,7 +123,7 @@ const AdminSpringTable = (props: Props) => {
                   />
                   View
                 </Link>
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
               <DropdownMenuSeparator />
             </DropdownMenuContent>
           </DropdownMenu>
@@ -239,12 +239,11 @@ const AdminSpringTable = (props: Props) => {
                     ],
                     body: rows.map((row) => {
                       return [
-                        row.original.id,
                         row.original.ph,
                         row.original.temperature,
                         row.original.turbudity,
                         row.original.dissolved_oxygen,
-                        row.original.water_level,
+                        row.original.water_flow,
                       ];
                     }),
                   });
@@ -261,12 +260,11 @@ const AdminSpringTable = (props: Props) => {
                       : table.getFilteredRowModel().rows;
                   const csv = rows.map((row) => {
                     return {
-                      id: row.original.id,
                       ph: row.original.ph,
                       temperature: row.original.temperature,
                       turbidity: row.original.turbudity,
                       dissolved_oxygen: row.original.dissolved_oxygen,
-                      water_level: row.original.water_level,
+                      water_level: row.original.water_flow,
                     };
                   });
                   console.log("CSV", csv);
@@ -283,18 +281,18 @@ const AdminSpringTable = (props: Props) => {
                         "Temperature",
                         "Turbidity",
                         "Dissolved Oxygen",
-                        "Water Level",
+                        "Water ",
                       ],
                     ],
                     { origin: "A1" },
                   );
-                  const max_width_id = rows.reduce(
-                    (w, r) => Math.max(w, String(r.original.id).length),
-                    10,
-                  );
+                  // const max_width_id = rows.reduce(
+                  //   (w, r) => Math.max(w, String(r.original.id).length),
+                  //   10,
+                  // );
 
                   const col_width = [
-                    { wch: max_width_id },
+                    // { wch: max_width_id },
                     { wch: 20 },
                     { wch: 20 },
                     { wch: 20 },
