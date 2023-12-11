@@ -27,10 +27,7 @@ const MapComponent = () => {
       const parser = new DOMParser();
       const kmlFetch = await fetch("./BOH1.kml");
       const kmlText = await kmlFetch.text();
-      console.log("kmlText", kmlText);
-      console.log("kml", kml);
       const kmlStuff = parser.parseFromString(kmlText, "text/xml");
-      console.log("kmlStuff", kmlStuff);
       setKml(kmlStuff);
       const resJS = await fetch("/api/kml", {
         method: "POST",
@@ -38,8 +35,6 @@ const MapComponent = () => {
         headers: { "Content-Type": "application/json" },
       });
       const resJSON = (await resJS.json()) as KmlJSON;
-      console.log("resJSON", resJSON);
-      console.log("coor", resJSON.features[0]?.geometry.coordinates);
       setKmlJSON(resJSON);
     }
     fetchKml(); // eslint-disable-line @typescript-eslint/no-floating-promises
