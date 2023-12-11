@@ -49,7 +49,7 @@ const data = [
 const SpringLineChart = () => {
   return (
     <LineChart
-      width={430}
+      width={330}
       height={250}
       data={data}
       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}

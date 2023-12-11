@@ -25,7 +25,7 @@ const MapComponent = () => {
   useEffect(() => {
     async function fetchKml() {
       const parser = new DOMParser();
-      const kmlFetch = await fetch("./BOUNDARYOFHILL1.kml");
+      const kmlFetch = await fetch("./BOH1.kml");
       const kmlText = await kmlFetch.text();
       console.log("kmlText", kmlText);
       console.log("kml", kml);
@@ -34,7 +34,7 @@ const MapComponent = () => {
       setKml(kmlStuff);
       const resJS = await fetch("/api/kml", {
         method: "POST",
-        body: JSON.stringify({ kmlFile: "https://uploadthing.com/f/ed4e6fba-fd00-4e67-853b-51310547e60d-uoil8l.kml" }),
+        body: JSON.stringify({ kmlFile: "https://uploadthing.com/f/d1cddf44-880c-4b25-8bbc-89f1281b8457-17th2.kml" }),
         headers: { "Content-Type": "application/json" },
       });
       const resJSON = (await resJS.json()) as KmlJSON;
@@ -45,6 +45,11 @@ const MapComponent = () => {
     fetchKml(); // eslint-disable-line @typescript-eslint/no-floating-promises
   }, []);
 
+//   googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+//         maxZoom: 20,
+//         subdomains:['mt0','mt1','mt2','mt3']
+// });
+
   return (
     <div className="rounded-md border">
       <MapContainer
@@ -54,8 +59,11 @@ const MapComponent = () => {
         className="h-[400px] md:h-[700px] w-full rounded-md"
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          // url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+          maxZoom={20}
+          subdomains={["mt0", "mt1", "mt2", "mt3"]}
           className="rounded-md"
         />
         {kml && <ReactLeafletKml kml={kml} />}
