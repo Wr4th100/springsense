@@ -1,15 +1,27 @@
-"use client";
-import React, { useState, useEffect } from "react";
+"use client"
+import React from "react";
 import HomeChart from "@/components/charts/HomeChart";
 import { Button } from "@/components/ui/button";
-import Main from "./main";
+import Main from "@/app/main/page";
 import { Nav } from "@/components/header/Menu";
+import ParticleBackground from "@/components/ParticleBackground";
+import Globe from "../spline/Globe";
+import { motion } from "framer-motion"
+import Link from "next/link";
+
+
 
 
 const HomePage = () => {
   return (
     <div>
-      <Nav/>
+      <motion.div
+  animate={{ x: 100 }}
+  transition={{ ease: "easeOut", duration: 2 }}
+/>
+    
+   
+
       <div className="flex justify-center">
         <h1 className="inline-block  bg-gradient-to-r from-cyan-500 via-blue-300 to-blue-500 bg-clip-text pt-9 text-5xl font-extrabold text-transparent">
           Welcome to Springshed Management Dashboard
@@ -26,11 +38,21 @@ const HomePage = () => {
           and resilience of our precious water ecosystems.
         </p>
       </div>
-      <div>
+     
+      <div className="flex items-center justify-center mb-5">
+        
         <HomeChart />
       </div>
-      <div className="">
-        <Button variant="outline" onClick={Main}>View Map</Button>
+      <div className="flex items-center justify-center">
+      <Globe/>
+      </div>
+      <div className="flex items-center justify-center m-5">
+        <Link href={
+          '/main'
+        }
+        >
+        <Button variant="outline">View Map</Button>
+        </Link>
       </div>
     </div>
   );

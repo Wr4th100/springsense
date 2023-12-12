@@ -9,7 +9,8 @@ import dynamic from "next/dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Loader2 } from "lucide-react";
 import SpringLineChart from "@/components/charts/SpringAreaChart";
-import HomePage from "./home";
+import HomePage from "@/components/pages/Home";
+
 
 // const MapComp = dynamic(() => import("@/components/MapComponent"), {
 //   loading: () => (
