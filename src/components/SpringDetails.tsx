@@ -3,11 +3,9 @@
 import useSpring from "@/hooks/use-spring";
 import { capitalizeAllCaseWords } from "@/lib/utils";
 import React from "react";
-import SpringLineChart from "./charts/SpringLineChart";
 import { api } from "@/trpc/react";
 import AdminSpringTable from "./table/AdminSpringTable";
 import { Loader2 } from "lucide-react";
-import SpringAreaChart from "./charts/SpringAreaChart";
 import PhLineChart from "./charts/PhChart";
 import TurbidityLineChart from "./charts/Turbidity";
 import {
@@ -16,9 +14,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import TempLineChart from "./charts/TempChart";
-import DOLineChart from "./charts/DOChart";
-import WaterFlowLineChart from "./charts/WaterFlowChart";
+import TempLineChart from "@/components/charts/TempChart";
+import DOLineChart from "@/components/charts/DOChart";
+import WaterFlowLineChart from "@/components/charts/WaterFlowChart";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const SpringDetails = () => {
   const springStore = useSpring();
@@ -46,25 +45,91 @@ const SpringDetails = () => {
               <AccordionItem value="item-1">
                 <AccordionTrigger>pH Analysis</AccordionTrigger>
                 <AccordionContent>
-                  <PhLineChart />
+                  <div className="flex justify-around flex-col md:flex-row">
+                    <PhLineChart />
+                    <Card>
+                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">
+                          pH Value
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-2xl font-bold">7.2</div>
+                        <p className="text-xs text-muted-foreground">
+                          +1.1% from last month
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2">
                 <AccordionTrigger>Turbidity Analysis</AccordionTrigger>
                 <AccordionContent>
-                  <TurbidityLineChart />
+                  <div className="flex justify-around flex-col md:flex-row">
+                    <TurbidityLineChart />
+                    <Card>
+                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">
+                          Turbidity
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-2xl font-bold">
+                          0.5 <span className="text-sm">NTU</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          -1% from last month
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
                 <AccordionTrigger>Temperature Analysis</AccordionTrigger>
                 <AccordionContent>
-                  <TempLineChart />
+                  <div className="flex justify-around flex-col md:flex-row">
+                    <TempLineChart />
+                    <Card>
+                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">
+                          Temperature
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-2xl font-bold">
+                          25.1 <span className="text-sm">°C</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          +5.7% from last month
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-4">
                 <AccordionTrigger>Dissolved Oxygen Analysis</AccordionTrigger>
                 <AccordionContent>
-                  <DOLineChart />
+                  <div className="flex justify-around flex-col md:flex-row">
+                    <DOLineChart />
+                    <Card>
+                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">
+                          Dissolved Oxygen
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-2xl font-bold">
+                          7.2 <span className="text-sm">mg/L</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          -1.2% from last month
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-5">
@@ -93,7 +158,7 @@ const SpringDetails = () => {
           </p>
         </div>
       )}
-      {isLoading && (
+      {isLoading && !springStore.springName && (
         <div className="flex h-64 items-center justify-center">
           <Loader2 className="h-8 w-8 animate-spin" />
           <p className="text-lg font-light">Loading...</p>

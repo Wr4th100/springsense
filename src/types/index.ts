@@ -1,15 +1,3 @@
-import type { NextApiResponse } from "next";
-import type { Server as SocketIOServer } from "socket.io";
-import type { Socket, Server as NetServer } from "net";
-
-export type NextApiResponseServerIo = NextApiResponse & {
-  socket: Socket & {
-    server: NetServer & {
-      io: SocketIOServer;
-    };
-  };
-};
-
 export type Feature = {
   type: string;
   properties: {

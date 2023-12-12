@@ -17,7 +17,7 @@ import useSpring from "@/hooks/use-spring";
 import type { KmlJSON } from "@/types";
 import { capitalizeAllCaseWords } from "@/lib/utils";
 
-const MapComponent = () => {
+const MapComponent = ({ kmlFile }: { kmlFile: string }) => {
   const springStore = useSpring();
   const [kml, setKml] = React.useState<Document>();
   const [kmlJSON, setKmlJSON] = React.useState<KmlJSON>();
@@ -25,25 +25,24 @@ const MapComponent = () => {
   useEffect(() => {
     async function fetchKml() {
       const parser = new DOMParser();
-      const kmlFetch = await fetch("./BOH1.kml");
+      const kmlFetch = await fetch(kmlFile);
       const kmlText = await kmlFetch.text();
       const kmlStuff = parser.parseFromString(kmlText, "text/xml");
+      console.log("KML STUFF" , kmlStuff);
       setKml(kmlStuff);
       const resJS = await fetch("/api/kml", {
         method: "POST",
-        body: JSON.stringify({ kmlFile: "https://uploadthing.com/f/d1cddf44-880c-4b25-8bbc-89f1281b8457-17th2.kml" }),
+        body: JSON.stringify({
+          kmlFile: kmlFile,
+        }),
         headers: { "Content-Type": "application/json" },
       });
       const resJSON = (await resJS.json()) as KmlJSON;
+      console.log("KML JSON", resJSON);
       setKmlJSON(resJSON);
     }
     fetchKml(); // eslint-disable-line @typescript-eslint/no-floating-promises
   }, []);
-
-//   googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
-//         maxZoom: 20,
-//         subdomains:['mt0','mt1','mt2','mt3']
-// });
 
   return (
     <div className="rounded-md border">
@@ -51,7 +50,7 @@ const MapComponent = () => {
         center={[10.11217445031641, 78.23546193193022]}
         zoom={13}
         scrollWheelZoom={false}
-        className="h-[400px] md:h-[700px] w-full rounded-md"
+        className="h-[400px] w-full rounded-md md:h-[700px]"
       >
         <TileLayer
           // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -64,7 +63,7 @@ const MapComponent = () => {
         {kml && <ReactLeafletKml kml={kml} />}
         {kmlJSON
           ? kmlJSON.features.map((feature, index) => {
-              if (feature.geometry.type === "Polygon") return;
+              if (feature.geometry.type === "Polygon" || feature.geometry.type === "LineString") return;
               return (
                 <Marker
                   position={[
