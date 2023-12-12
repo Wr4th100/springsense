@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <div className="flex justify-between border-b px-4 py-8 ">
       <div className="text-2xl font-bold">🌊 Springshed</div>
-      {/* <Nav /> */}
+      <Nav />
       <ModeToggle />
     </div>
   );
