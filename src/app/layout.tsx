@@ -9,6 +9,7 @@ import { cookies } from "next/headers";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import Header from "@/components/header/Header";
+import { Layout } from "@/components/dom/Layout";
 // import { SocketProvider } from "@/components/providers/SocketProvider";
 
 const montserrat = Montserrat({
@@ -32,9 +33,11 @@ export default function RootLayout({
         <TRPCReactProvider cookies={cookies().toString()}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {/* <SocketProvider> */}
-            <Header />
-            {children}
-            {/* </SocketProvider> */}
+            <Layout>
+              <Header />
+              {children}
+              {/* </SocketProvider> */}
+            </Layout>
           </ThemeProvider>
         </TRPCReactProvider>
       </body>

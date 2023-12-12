@@ -15,11 +15,10 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
 import TempLineChart from "./charts/TempChart";
 import DOLineChart from "./charts/DOChart";
 import WaterFlowLineChart from "./charts/WaterFlowChart";
-
 
 const SpringDetails = () => {
   const springStore = useSpring();
@@ -39,43 +38,42 @@ const SpringDetails = () => {
             <p className=""> Latitude: {springStore.x}</p>
             <p className=""> Longitude: {springStore.y}</p>
           </div>
-          <div className="mt-4">
+          {/* <div className="mt-4">
             <p className="text-lg font-bold">Water Quality</p>
-          </div>
-          <div className="my-8 flex md:space-x-4 space-y-4 space-x-0 md:space-y-0 flex-col md:flex-row">
-          <Accordion type="single" collapsible  className="w-full px-8">
-  <AccordionItem value="item-1">
-    <AccordionTrigger>pH Analysis</AccordionTrigger>
-    <AccordionContent>
-      <PhLineChart/>
-    </AccordionContent>
-  </AccordionItem>
-  <AccordionItem value="item-2">
-    <AccordionTrigger>Turbidity Analysis</AccordionTrigger>
-    <AccordionContent>
-      <TurbidityLineChart/>
-    </AccordionContent>
-  </AccordionItem>
-  <AccordionItem value="item-3">
-    <AccordionTrigger>Temperature Analysis</AccordionTrigger>
-    <AccordionContent>
-      <TempLineChart/>
-    </AccordionContent>
-  </AccordionItem>
-  <AccordionItem value="item-4">
-    <AccordionTrigger>Dissolved Oxygen Analysis</AccordionTrigger>
-    <AccordionContent>
-      <DOLineChart/>
-    </AccordionContent>
-  </AccordionItem>
-  <AccordionItem value="item-5">
-    <AccordionTrigger>Water Flow Analysis</AccordionTrigger>
-    <AccordionContent>
-      <WaterFlowLineChart/>
-    </AccordionContent>
-  </AccordionItem>
-  
-</Accordion>
+          </div> */}
+          <div className="my-8 flex flex-col space-x-0 space-y-4 md:flex-row md:space-x-4 md:space-y-0">
+            <Accordion type="single" collapsible className="w-full px-8">
+              <AccordionItem value="item-1">
+                <AccordionTrigger>pH Analysis</AccordionTrigger>
+                <AccordionContent>
+                  <PhLineChart />
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2">
+                <AccordionTrigger>Turbidity Analysis</AccordionTrigger>
+                <AccordionContent>
+                  <TurbidityLineChart />
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-3">
+                <AccordionTrigger>Temperature Analysis</AccordionTrigger>
+                <AccordionContent>
+                  <TempLineChart />
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-4">
+                <AccordionTrigger>Dissolved Oxygen Analysis</AccordionTrigger>
+                <AccordionContent>
+                  <DOLineChart />
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-5">
+                <AccordionTrigger>Water Flow Analysis</AccordionTrigger>
+                <AccordionContent>
+                  <WaterFlowLineChart />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
 
             {/* <div className="w-full md:w-1/2">
               <PhLineChart/>
