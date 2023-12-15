@@ -15,7 +15,6 @@ export const env = createEnv({
         "You forgot to change the default URL",
       ),
     // DATABASE_URL_NON_POOLING: z.string(),
-    SHADOW_DATABASE_URL: z.string(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -51,7 +50,6 @@ export const env = createEnv({
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     // DATABASE_URL_NON_POOLING: process.env.DATABASE_URL_NON_POOLING,
-    SHADOW_DATABASE_URL: process.env.SHADOW_DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,

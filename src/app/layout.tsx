@@ -10,6 +10,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import Header from "@/components/header/Header";
 import { Layout } from "@/components/dom/Layout";
+import RealtimeDB from "@/components/RealtimeDB";
 // import { SocketProvider } from "@/components/providers/SocketProvider";
 
 const montserrat = Montserrat({
@@ -36,6 +37,7 @@ export default function RootLayout({
             <Layout>
               <Header />
               {children}
+              <RealtimeDB />
               {/* </SocketProvider> */}
             </Layout>
           </ThemeProvider>

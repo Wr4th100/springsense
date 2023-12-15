@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import DashboardPage from "../home/Dashboard";
+import RealtimeDB from "../RealtimeDB";
 
 const HomePage = () => {
   return (
@@ -93,6 +94,7 @@ const HomePage = () => {
           </Link>
         </div>
       </div>
+      <RealtimeDB />
     </div>
   );
 };

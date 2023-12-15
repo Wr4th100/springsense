@@ -3,9 +3,8 @@ generator client {
 }
 
 datasource db {
-    provider          = "sqlserver"
+    provider          = "postgresql"
     url               = env("DATABASE_URL")
-    shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Post {
@@ -81,10 +80,58 @@ model VerificationToken {
 // - solar radiation sensor
 
 model SpringShed {
-    id               Int      @id @default(autoincrement())
+    id               Int            @id @default(autoincrement())
     name             String
-    location         Location @relation(fields: [locationId], references: [id])
+    location         Location       @relation(fields: [locationId], references: [id])
     locationId       Int
+    ph               Float
+    temp             Float
+    turbidity        Float
+    dissolved_oxygen Float
+    water_level      Float
+    createdAt        DateTime       @default(now())
+    updatedAt        DateTime       @updatedAt
+    AirQuality       AirQuality[]
+    WaterQuality     WaterQuality[]
+}
+
+model WeatherStation {
+    id         Int      @id @default(autoincrement())
+    name       String
+    location   Location @relation(fields: [locationId], references: [id])
+    locationId Int
+    acetone    Float
+    airQuality Float
+    co         Float
+    co2        Float
+    ethanol    Float
+    nh4        Float
+    toluene    Float
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+}
+
+model AirQuality {
+    id         Int          @id @default(autoincrement())
+    location   Location     @relation(fields: [locationId], references: [id])
+    locationId Int
+    springShed SpringShed[]
+    acetone    Float
+    airQuality Float
+    co         Float
+    co2        Float
+    ethanol    Float
+    nh4        Float
+    toluene    Float
+    createdAt  DateTime     @default(now())
+    updatedAt  DateTime     @updatedAt
+}
+
+model WaterQuality {
+    id         Int          @id @default(autoincrement())
+    location   Location     @relation(fields: [locationId], references: [id])
+    locationId Int
+    springShed SpringShed[]
     ph               Float
     temp             Float
     turbidity        Float
@@ -92,19 +139,6 @@ model SpringShed {
     water_level      Float
     createdAt        DateTime @default(now())
     updatedAt        DateTime @updatedAt
-}
-
-model WeatherStation {
-    id              Int      @id @default(autoincrement())
-    name            String
-    location        Location @relation(fields: [locationId], references: [id])
-    locationId      Int
-    humidity        Float
-    rainfall        Float
-    wind_speed      Float
-    solar_radiation Float
-    createdAt       DateTime @default(now())
-    updatedAt       DateTime @updatedAt
 }
 
 model Location {
@@ -116,17 +150,20 @@ model Location {
     updatedAt      DateTime         @updatedAt
     SpringShed     SpringShed[]
     WeatherStation WeatherStation[]
+
+    AirQuality   AirQuality[]
+    WaterQuality WaterQuality[]
 }
 
 // / The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model iottelemetry {
-    messageId             BigInt?
-    deviceId              String?   @db.NVarChar(4000)
-    temperature           Float?
-    humidity              Float?
-    EventProcessedUtcTime DateTime?
-    EventEnqueuedUtcTime  DateTime?
-    ConnectionDeviceId    String?   @db.NVarChar(4000)
+// model iottelemetry {
+//     messageId             BigInt?
+//     deviceId              String?   @db.NVarChar(4000)
+//     temperature           Float?
+//     humidity              Float?
+//     EventProcessedUtcTime DateTime?
+//     EventEnqueuedUtcTime  DateTime?
+//     ConnectionDeviceId    String?   @db.NVarChar(4000)
 
-    @@ignore
-}
+//     @@ignore
+// }
