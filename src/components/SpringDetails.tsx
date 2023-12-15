@@ -2,7 +2,7 @@
 
 import useSpring from "@/hooks/use-spring";
 import { capitalizeAllCaseWords } from "@/lib/utils";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { api } from "@/trpc/react";
 import AdminSpringTable from "./table/AdminSpringTable";
 import { Loader2 } from "lucide-react";
@@ -18,6 +18,8 @@ import TempLineChart from "@/components/charts/TempChart";
 import DOLineChart from "@/components/charts/DOChart";
 import WaterFlowLineChart from "@/components/charts/WaterFlowChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { get, ref } from "firebase/database";
+import database from "@/lib/firebaseConfig";
 
 const SpringDetails = () => {
   const springStore = useSpring();
@@ -25,6 +27,26 @@ const SpringDetails = () => {
     undefined,
     {},
   );
+  const [waterQuality, setWaterQuality] = useState({})
+
+  useEffect(() => {
+    console.log('useEffect')
+    const usersRef = ref(database , '/MQ135&Temp');
+    console.log(usersRef)
+    get(usersRef).then((snapshot) => {
+      console.log(snapshot)
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+        setWaterQuality(snapshot.val()) // eslint-disable-line
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }, [])
+
 
   return (
     <div className="rounded border p-4">

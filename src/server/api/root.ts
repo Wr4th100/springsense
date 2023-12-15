@@ -1,6 +1,8 @@
 import { postRouter } from "@/server/api/routers/post";
 import { springRouter } from "./routers/spring";
 import { createTRPCRouter } from "@/server/api/trpc";
+import { locationRouter } from "./routers/location";
+import { aqRouter } from "./routers/aq";
 
 /**
  * This is the primary router for your server.
@@ -9,7 +11,9 @@ import { createTRPCRouter } from "@/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   post: postRouter,
-  spring:springRouter
+  spring: springRouter,
+  aq: aqRouter,
+  location: locationRouter,
 });
 
 // export type definition of API
