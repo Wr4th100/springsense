@@ -18,7 +18,7 @@ const DOLineChart = () => {
       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="date" />
+      <XAxis dataKey="date" label={Date} />
       <YAxis />
       <Legend />
       <Line type="monotone" dataKey="dissolved_oxygen" stroke="#8884d8" />

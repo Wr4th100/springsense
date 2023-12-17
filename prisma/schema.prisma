@@ -101,7 +101,7 @@ model WeatherStation {
     location   Location @relation(fields: [locationId], references: [id])
     locationId Int
     acetone    Float
-    airQuality Float
+    airQuality String
     co         Float
     co2        Float
     ethanol    Float
@@ -117,7 +117,7 @@ model AirQuality {
     locationId Int
     springShed SpringShed[]
     acetone    Float
-    airQuality Float
+    airQuality String
     co         Float
     co2        Float
     ethanol    Float

@@ -9,6 +9,8 @@ const config = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "utfs.io" },
+      { protocol: "https", hostname: "thespringsportal.org" },
+      { protocol: "https", hostname: "ik.imagekit.io" },
       { protocol: "https", hostname: "uploadthing.com" },
     ],
   },
