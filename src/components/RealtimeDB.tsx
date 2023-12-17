@@ -16,7 +16,7 @@ const RealtimeDB = () => {
       console.log(snapshot)
       if (snapshot.exists()) {
         console.log(snapshot.val());
-        setUsers(snapshot.val())
+        setUsers(snapshot.val()) // eslint-disable-line
       } else {
         console.log("No data available");
       }
