@@ -1,15 +1,16 @@
-"use client"
+"use client";
 
 import { api } from "@/trpc/react";
 import React, { useState } from "react";
 import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from "recharts";
 
-// type Props = {}
-
-const PhLineChart = () => {  
-
+const PhLineChart = () => {
   const phQuery = api.spring.findAllPh.useQuery();
-  
+  // const ph = []
+  // phValues.map((value) => {
+  //   ph.push({date: v, pH: value.pH})
+  // })
+
   return (
     <LineChart
       width={330}
@@ -21,7 +22,7 @@ const PhLineChart = () => {
       <XAxis dataKey="date" />
       <YAxis />
       <Legend />
-      <Line type="monotone" dataKey="pH" stroke="#8884d8" />
+      <Line type="monotone" dataKey="Temperature" stroke="#8884d8" />
       {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
     </LineChart>
   );

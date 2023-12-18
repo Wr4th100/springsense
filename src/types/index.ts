@@ -24,3 +24,32 @@ export type KmlJSON = {
   type: string;
   features: Feature[];
 };
+
+export type ReceivingAirData = Record<
+  string,
+  {
+    Acetone: number;
+    AirQuality: string;
+    CO: number;
+    CO2: number;
+    Ethanol: number;
+    HeatIndex: number;
+    Humidity: number;
+    NH4: number;
+    Temperature: number;
+    Toluene: number;
+  }
+>;
+
+export type ReceivingWaterData = Record<
+  string,
+  {
+    DO: number;
+    LATTITUDE: number;
+    LONGITUDE: number;
+    PH: number;
+    TDS: number;
+    TEMPERATURE: number;
+    TURBIDITY: number;
+  }
+>;

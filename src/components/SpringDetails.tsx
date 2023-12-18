@@ -18,8 +18,9 @@ import TempLineChart from "@/components/charts/TempChart";
 import DOLineChart from "@/components/charts/DOChart";
 import WaterFlowLineChart from "@/components/charts/WaterFlowChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { get, ref } from "firebase/database";
+import { get, onValue, ref } from "firebase/database";
 import database from "@/lib/firebaseConfig";
+import { AirQuality } from "@prisma/client";
 
 const SpringDetails = () => {
   const springStore = useSpring();
@@ -27,26 +28,6 @@ const SpringDetails = () => {
     undefined,
     {},
   );
-  const [waterQuality, setWaterQuality] = useState({})
-
-  useEffect(() => {
-    console.log('useEffect')
-    const usersRef = ref(database , '/MQ135&Temp');
-    console.log(usersRef)
-    get(usersRef).then((snapshot) => {
-      console.log(snapshot)
-      if (snapshot.exists()) {
-        console.log(snapshot.val());
-        setWaterQuality(snapshot.val()) // eslint-disable-line
-      } else {
-        console.log("No data available");
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  }, [])
-
 
   return (
     <div className="rounded border p-4">
@@ -67,7 +48,7 @@ const SpringDetails = () => {
               <AccordionItem value="item-1">
                 <AccordionTrigger>pH Analysis</AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex justify-around flex-col md:flex-row">
+                  <div className="flex flex-col justify-around md:flex-row">
                     <PhLineChart />
                     <Card>
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -88,7 +69,7 @@ const SpringDetails = () => {
               <AccordionItem value="item-2">
                 <AccordionTrigger>Turbidity Analysis</AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex justify-around flex-col md:flex-row">
+                  <div className="flex flex-col justify-around md:flex-row">
                     <TurbidityLineChart />
                     <Card>
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -111,9 +92,9 @@ const SpringDetails = () => {
               <AccordionItem value="item-3">
                 <AccordionTrigger>Temperature Analysis</AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex justify-around flex-col md:flex-row">
+                  <div className="flex flex-col justify-around md:flex-row">
                     <TempLineChart />
-                    <Card>
+                    {/* <Card>
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">
                           Temperature
@@ -127,14 +108,14 @@ const SpringDetails = () => {
                           +5.7% from last month
                         </p>
                       </CardContent>
-                    </Card>
+                    </Card> */}
                   </div>
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-4">
                 <AccordionTrigger>Dissolved Oxygen Analysis</AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex justify-around flex-col md:flex-row">
+                  <div className="flex flex-col justify-around md:flex-row">
                     <DOLineChart />
                     <Card>
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

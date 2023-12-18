@@ -5,6 +5,9 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
+import { get, ref } from "firebase/database";
+import database from "@/lib/firebaseConfig";
+import type { ReceivingAirData } from "@/types";
 
 export const aqRouter = createTRPCRouter({
   lastAirQualityRow: publicProcedure.query(({ ctx }) => {
@@ -19,36 +22,398 @@ export const aqRouter = createTRPCRouter({
     });
   }),
 
-  createAQReading: publicProcedure.input(
-    z.object({
-      acetone: z.number(),
-      airQuality: z.string(),
-      co: z.number(),
-      co2: z.number(),
-      ethanol: z.number(),
-      nh4: z.number(),
-      toluene: z.number(),
-    }),
-  ).mutation(async ({ ctx, input }) => {
-    // simulate a slow db call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+  createAQReading: publicProcedure
+    .input(
+      z.object({
+        acetone: z.number(),
+        airQuality: z.string(),
+        co: z.number(),
+        co2: z.number(),
+        ethanol: z.number(),
+        nh4: z.number(),
+        toluene: z.number(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      // simulate a slow db call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    return ctx.db.airQuality.create({
-      data: {
-        acetone: input.acetone,
-        airQuality: input.airQuality,
-        co: input.co,
-        co2: input.co2,
-        ethanol: input.ethanol,
-        nh4: input.nh4,
-        toluene: input.toluene,
-        location: {
-          connect: {
-            id: 1,
+      return ctx.db.airQuality.create({
+        data: {
+          acetone: input.acetone,
+          airQuality: input.airQuality,
+          co: input.co,
+          co2: input.co2,
+          ethanol: input.ethanol,
+          nh4: input.nh4,
+          toluene: input.toluene,
+          location: {
+            connect: {
+              id: 1,
+            },
           },
         },
+      });
+    }),
+
+  getTemperature: publicProcedure.query(async ({ ctx }) => {
+    const aqRef = ref(database, "/MQ135&Temp");
+    const snapshot = await get(aqRef);
+    const allData: Array<
+      [
+        string,
+        {
+          Acetone: number;
+          AirQuality: string;
+          CO: number;
+          CO2: number;
+          Ethanol: number;
+          HeatIndex: number;
+          Humidity: number;
+          NH4: number;
+          Temperature: number;
+          Toluene: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingAirData).map(
+      ([key, value]) => {
+        return [key, value];
       },
+    );
+    console.log(" ==================== ");
+    console.log("ALL DATA", allData);
+    console.log(" ==================== ");
+
+    const temperature: { date: string; temperature: number }[] = [];
+
+    allData.map((data, index) => {
+      temperature.push({
+        date: data[0],
+        temperature: data[1].Temperature,
+      });
     });
+
+    return temperature;
   }),
+
+  getCurrentAcetone: publicProcedure.query(async ({ ctx }) => {
+    const aqRef = ref(database, "/MQ135&Temp");
+    const snapshot = await get(aqRef);
+    const allData: Array<
+      [
+        string,
+        {
+          Acetone: number;
+          AirQuality: string;
+          CO: number;
+          CO2: number;
+          Ethanol: number;
+          HeatIndex: number;
+          Humidity: number;
+          NH4: number;
+          Temperature: number;
+          Toluene: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingAirData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+
+    // eslint-disable-next-line
+    const acetoneValue: number = allData[allData.length - 1]?.[1]
+      .Acetone as number;
+
+    return acetoneValue;
+  }),
+
+  getCurrentCO: publicProcedure.query(async ({ ctx }) => {
+    const aqRef = ref(database, "/MQ135&Temp");
+    const snapshot = await get(aqRef);
+    const allData: Array<
+      [
+        string,
+        {
+          Acetone: number;
+          AirQuality: string;
+          CO: number;
+          CO2: number;
+          Ethanol: number;
+          HeatIndex: number;
+          Humidity: number;
+          NH4: number;
+          Temperature: number;
+          Toluene: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingAirData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+
+    // eslint-disable-next-line
+    const coValue: number = allData[allData.length - 1]?.[1].CO as number;
+
+    return coValue;
+  }),
+
+  getCurrentCO2: publicProcedure.query(async ({ ctx }) => {
+    const aqRef = ref(database, "/MQ135&Temp");
+    const snapshot = await get(aqRef);
+    const allData: Array<
+      [
+        string,
+        {
+          Acetone: number;
+          AirQuality: string;
+          CO: number;
+          CO2: number;
+          Ethanol: number;
+          HeatIndex: number;
+          Humidity: number;
+          NH4: number;
+          Temperature: number;
+          Toluene: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingAirData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+
+    // eslint-disable-next-line
+    const co2Value: number = allData[allData.length - 1]?.[1].CO2 as number;
+
+    return co2Value;
+  }),
+
+  getCurrentEthanol: publicProcedure.query(async ({ ctx }) => {
+    const aqRef = ref(database, "/MQ135&Temp");
+    const snapshot = await get(aqRef);
+    const allData: Array<
+      [
+        string,
+        {
+          Acetone: number;
+          AirQuality: string;
+          CO: number;
+          CO2: number;
+          Ethanol: number;
+          HeatIndex: number;
+          Humidity: number;
+          NH4: number;
+          Temperature: number;
+          Toluene: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingAirData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+
+    // eslint-disable-next-line
+    const ethanolValue: number = allData[allData.length - 1]?.[1]
+      .Ethanol as number;
+
+    return ethanolValue;
+  }),
+
+  getCurrentNH4: publicProcedure.query(async ({ ctx }) => {
+    const aqRef = ref(database, "/MQ135&Temp");
+    const snapshot = await get(aqRef);
+    const allData: Array<
+      [
+        string,
+        {
+          Acetone: number;
+          AirQuality: string;
+          CO: number;
+          CO2: number;
+          Ethanol: number;
+          HeatIndex: number;
+          Humidity: number;
+          NH4: number;
+          Temperature: number;
+          Toluene: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingAirData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+
+    // eslint-disable-next-line
+    const nh4Value: number = allData[allData.length - 1]?.[1].NH4 as number;
+
+    return nh4Value;
+  }),
+
+  getCurrentToluene: publicProcedure.query(async ({ ctx }) => {
+    const aqRef = ref(database, "/MQ135&Temp");
+    const snapshot = await get(aqRef);
+    const allData: Array<
+      [
+        string,
+        {
+          Acetone: number;
+          AirQuality: string;
+          CO: number;
+          CO2: number;
+          Ethanol: number;
+          HeatIndex: number;
+          Humidity: number;
+          NH4: number;
+          Temperature: number;
+          Toluene: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingAirData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+
+    // eslint-disable-next-line
+    const tolueneValue: number = allData[allData.length - 1]?.[1]
+      .Toluene as number;
+
+    return tolueneValue;
+  }),
+
+  getCurrentTemperature: publicProcedure.query(async ({ ctx }) => {
+    const aqRef = ref(database, "/MQ135&Temp");
+    const snapshot = await get(aqRef);
+    const allData: Array<
+      [
+        string,
+        {
+          Acetone: number;
+          AirQuality: string;
+          CO: number;
+          CO2: number;
+          Ethanol: number;
+          HeatIndex: number;
+          Humidity: number;
+          NH4: number;
+          Temperature: number;
+          Toluene: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingAirData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+
+    // eslint-disable-next-line
+    const temperatureValue: number = allData[allData.length - 1]?.[1]
+      .Temperature as number;
+
+    return temperatureValue;
+  }),
+
+  getCurrentHumidity: publicProcedure.query(async ({ ctx }) => {
+    const aqRef = ref(database, "/MQ135&Temp");
+    const snapshot = await get(aqRef);
+
+    const allData: Array<
+      [
+        string,
+        {
+          Acetone: number;
+          AirQuality: string;
+          CO: number;
+          CO2: number;
+          Ethanol: number;
+          HeatIndex: number;
+          Humidity: number;
+          NH4: number;
+          Temperature: number;
+          Toluene: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingAirData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+
+    // eslint-disable-next-line
+    const humidityValue: number = allData[allData.length - 1]?.[1]
+      .Humidity as number;
+
+    return humidityValue;
+  }),
+
+  getCurrentHeatIndex: publicProcedure.query(async ({ ctx }) => {
+    const aqRef = ref(database, "/MQ135&Temp");
+    const snapshot = await get(aqRef);
+
+    const allData: Array<
+      [
+        string,
+        {
+          Acetone: number;
+          AirQuality: string;
+          CO: number;
+          CO2: number;
+          Ethanol: number;
+          HeatIndex: number;
+          Humidity: number;
+          NH4: number;
+          Temperature: number;
+          Toluene: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingAirData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+
+    // eslint-disable-next-line
+    const heatIndexValue: number = allData[allData.length - 1]?.[1]
+      .HeatIndex as number;
+
+    return heatIndexValue;
+  }),
+
+  getCurrentAirQuality: publicProcedure.query(async ({ ctx }) => {
+    const aqRef = ref(database, "/MQ135&Temp");
+    const snapshot = await get(aqRef);
+
+    const allData: Array<
+      [
+        string,
+        {
+          Acetone: number;
+          AirQuality: string;
+          CO: number;
+          CO2: number;
+          Ethanol: number;
+          HeatIndex: number;
+          Humidity: number;
+          NH4: number;
+          Temperature: number;
+          Toluene: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingAirData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+
+    // eslint-disable-next-line
+    const airQualityValue = allData[allData.length - 1]?.[1]
+
+    return airQualityValue;
+  }
+  ),
 
 });
