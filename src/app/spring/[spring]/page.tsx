@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import MapDisplay from "@/components/MapDisplay";
 import SelectMapType from "@/components/SelectMapType";
