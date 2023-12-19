@@ -241,7 +241,7 @@ const AdminSpringTable = (props: Props) => {
                       return [
                         row.original.ph,
                         row.original.temperature,
-                        row.original.turbudity,
+                        row.original.turbidity,
                         row.original.dissolved_oxygen,
                         row.original.water_flow,
                       ];
@@ -262,7 +262,7 @@ const AdminSpringTable = (props: Props) => {
                     return {
                       ph: row.original.ph,
                       temperature: row.original.temperature,
-                      turbidity: row.original.turbudity,
+                      turbidity: row.original.turbidity,
                       dissolved_oxygen: row.original.dissolved_oxygen,
                       water_level: row.original.water_flow,
                     };

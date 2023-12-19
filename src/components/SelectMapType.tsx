@@ -20,6 +20,7 @@ const SelectMapType = () => {
     <div className="flex items-center justify-between rounded border p-2">
       <div>
         <p className="text-sm font-medium">Map Type</p>
+        <p className="text-xs text-gray-500">Select a map from the select option</p>
       </div>
       <Select
         value={mapType.mapType}

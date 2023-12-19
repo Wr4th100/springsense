@@ -7,7 +7,7 @@ import {
 } from "@/server/api/trpc";
 import { get, ref } from "firebase/database";
 import database from "@/lib/firebaseConfig";
-import type { ReceivingAirData } from "@/types";
+import type { ReceivingAirData, ReceivingWaterData } from "@/types";
 
 export const aqRouter = createTRPCRouter({
   lastAirQualityRow: publicProcedure.query(({ ctx }) => {
@@ -93,7 +93,131 @@ export const aqRouter = createTRPCRouter({
       });
     });
 
-    return temperature;
+    return temperature.slice(temperature.length - 10, temperature.length);
+  }),
+
+  getPH: publicProcedure.query(async ({ ctx }) => {
+    const wqRef = ref(database, "/WaterQualityResearch1");
+    const snapshot = await get(wqRef);
+    const allData: Array<
+      [
+        string,
+        {
+          PH: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingWaterData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+    console.log(" ==================== ");
+    console.log("ALL DATA", allData);
+    console.log(" ==================== ");
+
+    const ph: { date: string; ph: number }[] = [];
+
+    allData.map((data, index) => {
+      ph.push({
+        date: data[0],
+        ph: data[1].PH,
+      });
+    });
+
+    return ph.slice(ph.length - 10, ph.length);
+  }),
+
+  getTurbidity: publicProcedure.query(async ({ ctx }) => {
+    const wqRef = ref(database, "/WaterQualityResearch1");
+    const snapshot = await get(wqRef);
+    const allData: Array<
+      [
+        string,
+        {
+          TURBIDITY: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingWaterData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+    console.log(" ==================== ");
+    console.log("ALL DATA", allData);
+    console.log(" ==================== ");
+
+    const turbidity: { date: string; turbidity: number }[] = [];
+
+    allData.map((data, index) => {
+      turbidity.push({
+        date: data[0],
+        turbidity: data[1].TURBIDITY,
+      });
+    });
+
+    return turbidity.slice(turbidity.length - 10, turbidity.length);
+  }),
+
+  getTDS: publicProcedure.query(async ({ ctx }) => {
+    const wqRef = ref(database, "/WaterQualityResearch1");
+    const snapshot = await get(wqRef);
+    const allData: Array<
+      [
+        string,
+        {
+          TDS: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingWaterData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+    console.log(" ==================== ");
+    console.log("ALL DATA", allData);
+    console.log(" ==================== ");
+
+    const tds: { date: string; tds: number }[] = [];
+
+    allData.map((data, index) => {
+      tds.push({
+        date: data[0],
+        tds: data[1].TDS,
+      });
+    });
+
+    return tds.slice(tds.length - 10, tds.length);
+  }),
+
+  getDO: publicProcedure.query(async ({ ctx }) => {
+    const wqRef = ref(database, "/WaterQualityResearch1");
+    const snapshot = await get(wqRef);
+    const allData: Array<
+      [
+        string,
+        {
+          DO: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingWaterData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+    console.log(" ==================== ");
+    console.log("ALL DATA", allData);
+    console.log(" ==================== ");
+
+    const doValue: { date: string; do: number }[] = [];
+
+    allData.map((data, index) => {
+      doValue.push({
+        date: data[0],
+        do: data[1].DO,
+      });
+    });
+
+    return doValue.slice(doValue.length - 10, doValue.length);
   }),
 
   getCurrentAcetone: publicProcedure.query(async ({ ctx }) => {
