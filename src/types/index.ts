@@ -53,3 +53,17 @@ export type ReceivingWaterData = Record<
     TURBIDITY: number;
   }
 >;
+
+export type ReceivingFlowData = Record<
+  string,
+  {
+    FlowRate: number;
+    TotalMillilitres: number;
+  }
+>;
+
+export interface EmailPayload  {
+  to: string;
+  subject: string;
+  html: string;
+};

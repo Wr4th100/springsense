@@ -1,8 +1,9 @@
-"use client"
+"use client";
 
+import useSpring from "@/hooks/use-spring";
 import { api } from "@/trpc/react";
 import React, { useState } from "react";
-import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Label, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 
 // type Props = {}
 type Props = {
@@ -25,10 +26,16 @@ const WaterFlowLineChart = (props:Props) => {
       className={props.className}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="date" />
-      <YAxis />
+      <XAxis dataKey="date">
+        <Label value={"Date"} offset={0} position="bottom" fontSize={20} />{" "}
+      </XAxis>
+      <YAxis
+        label={{ value: "Water Flow", angle: -90, position: "insideLeft", fontSize: 20 }}
+      />
+      
+      <Tooltip />
       <Legend />
-      <Line type="monotone" dataKey="water_flow" stroke="#8884d8" />
+      <Line type="monotone" dataKey="flowRate" stroke="#8884d8" activeDot={{ r: 8 }} />
       {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
     </LineChart>
   );

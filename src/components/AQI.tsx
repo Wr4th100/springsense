@@ -2,26 +2,15 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { api } from "@/trpc/react";
 
-const WeatherStation = () => {
-  //   const currentAcetone = api.aq.getCurrentAcetone.useQuery();
-  //   const currentCO = api.aq.getCurrentCO.useQuery();
-  //   const currentCO2 = api.aq.getCurrentCO2.useQuery();
-  //   const currentEthanol = api.aq.getCurrentEthanol.useQuery();
-  //   const currentNH4 = api.aq.getCurrentNH4.useQuery();
-  //   const currentToluene = api.aq.getCurrentToluene.useQuery();
-  //   const currentTemperature = api.aq.getCurrentTemperature.useQuery();
-  //   const currentHumidity = api.aq.getCurrentHumidity.useQuery();
-  //   const currentHeatIndex = api.aq.getCurrentHeatIndex.useQuery();
-
-  const currentAirQuality = api.aq.getCurrentAirQuality.useQuery(undefined, {
-    refetchInterval: 2000
-  });
-
+const AQI = () => {
+  const currentAirQuality = api.aq.getCurrentAirQuality.useQuery();
 
   return (
     <div className="w-full space-y-4 rounded border p-8">
       <div>
-        <p className="text-2xl font-bold text-primary">Weather Station</p>
+        <p className="text-2xl font-bold text-primary">
+          Water Quality Parameters
+        </p>
       </div>
       <div className="grid grid-cols-3 space-x-4 ">
         <div className="space-y-4">
@@ -167,4 +156,4 @@ const WeatherStation = () => {
   );
 };
 
-export default WeatherStation;
+export default AQI;

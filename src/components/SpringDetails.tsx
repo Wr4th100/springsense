@@ -28,6 +28,10 @@ const SpringDetails = () => {
     undefined,
     {},
   );
+  const wqDetails = api.wq.getCurrentWaterQuality.useQuery(undefined, {
+    enabled: !!springStore.springName,
+    refetchInterval: 5000,
+  });
 
   return (
     <div className="rounded border p-4">
@@ -58,7 +62,7 @@ const SpringDetails = () => {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <div className="text-2xl font-bold">7.2</div>
+                        <div className="text-2xl font-bold">{wqDetails.data?.PH}</div>
                         <p className="text-xs text-muted-foreground">
                           +1.1% from last month
                         </p>
@@ -81,7 +85,7 @@ const SpringDetails = () => {
                       </CardHeader>
                       <CardContent>
                         <div className="text-2xl font-bold">
-                          0.5 <span className="text-sm">NTU</span>
+                          {wqDetails.data?.TURBIDITY} <span className="text-sm">NTU</span>
                         </div>
                         <p className="text-xs text-muted-foreground">
                           -1% from last month
@@ -105,12 +109,12 @@ const SpringDetails = () => {
                       </CardHeader>
                       <CardContent>
                         <div className="text-2xl font-bold">
-                          25.1 <span className="text-sm">°C</span>
+                          {wqDetails.data?.TEMPERATURE} <span className="text-sm">°C</span>
                         </div>
-                        <p className="text-xs text-muted-foreground">
+                        {/* <p className="text-xs text-muted-foreground">
                           +5.7% from last month
-                        </p>
-                      </CardContent>
+                        </p> */}
+                      {/* </CardContent>
                     </Card> */}
                   </div>
                 </AccordionContent>
@@ -128,12 +132,12 @@ const SpringDetails = () => {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <div className="md:text-2xl text-sm font-bold">
-                          7.2 <span className="text-sm">mg/L</span>
+                        <div className="md:text-2xl text-sm  font-bold">
+                          {wqDetails.data?.DO} <span className="text-sm">mg/L</span>
                         </div>
-                        <p className="text-xs text-muted-foreground">
+                        {/* <p className="text-xs text-muted-foreground">
                           -1.2% from last month
-                        </p>
+                        </p> */}
                       </CardContent>
                     </Card>
                   </div>

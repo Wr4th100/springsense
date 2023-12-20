@@ -3,7 +3,7 @@
 import useSpring from "@/hooks/use-spring";
 import { api } from "@/trpc/react";
 import React, { useEffect, useRef, useState } from "react";
-import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Label, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 
 type Props = {
   width: number;
@@ -20,7 +20,7 @@ const TempLineChart = (props:Props) => {
 
   const temperature = api.aq.getTemperature.useQuery(undefined, {
     enabled: !!springStore.springName,
-    refetchInterval: 1000,
+    refetchInterval: 5000,
   });
   // console.log(data);
 
@@ -47,8 +47,15 @@ const TempLineChart = (props:Props) => {
       className={props.className}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="date" />
-      <YAxis domain={[0, 60]} />
+      <XAxis dataKey="date">
+        <Label value={"Date"} offset={0} position="bottom" fontSize={20} />{" "}
+      </XAxis>
+      <YAxis
+        label={{ value: "Temperature", angle: -90, position: "insideLeft", fontSize: 20 }}
+        domain={[0, 60]}
+      />
+      {/* <YAxis  /> */}
+      <Tooltip />
       <Legend />
       <Line type="monotone" dataKey="temperature" stroke="#8884d8" />
       {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
