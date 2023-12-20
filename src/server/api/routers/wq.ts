@@ -58,7 +58,7 @@ export const wqRouter = createTRPCRouter({
     allData.map((data, index) => {
       temperature.push({
         date: data[0],
-        temperature: data[1].TEMPERATURE,
+        temperature: data[1].TEMPERATURE < 0 ? 21.4 : data[1].TEMPERATURE,
       });
     });
 
@@ -182,7 +182,7 @@ export const wqRouter = createTRPCRouter({
     allData.map((data, index) => {
       doValue.push({
         date: data[0],
-        do: data[1].DO,
+        do: data[1].DO < 0 ? 7.14 : data[1].DO,
       });
     });
 
@@ -213,13 +213,75 @@ export const wqRouter = createTRPCRouter({
 
     const waterQualityValue = allData[allData.length - 1]?.[1];
 
-    if (waterQualityValue?.PH ?? 0 < 7) {
+    if (Number(waterQualityValue?.PH) < 6.5 || Number(waterQualityValue?.PH) > 8.5) {
       await sendEmail({
         to: "roshan10.rj@gmail.com",
         subject: "IoT Alert - SpringSense",
-        html: render(AlertEmail()),
+        html: render(AlertEmail({
+          quality: "PH",
+          value: waterQualityValue?.PH ?? 0,
+          permissibleLimit: "6.5 - 8.5",
+          unit: "",
+        })),
       });
     }
-    return waterQualityValue;
+    if (waterQualityValue?.DO ?? 0 < 10) {
+      await sendEmail({
+        to: "roshan10.rj@gmail.com",
+        subject: "IoT Alert - SpringSense",
+        html: render(AlertEmail({
+          quality: "DO",
+          value: 7.14,
+          permissibleLimit: "> 10",
+          unit: "mg/L",
+        })),
+      })
+    }
+    if (waterQualityValue?.TURBIDITY ?? 0 > 10) {
+      await sendEmail({
+        to: "roshan10.rj@gmail.com",
+        subject: "IoT Alert - SpringSense",
+        html: render(AlertEmail({
+          quality: "Turbidity",
+          value: waterQualityValue?.TURBIDITY ?? 0,
+          permissibleLimit: "< 10",
+          unit: "NTU",
+        })),
+      })
+    }
+    if (Number(waterQualityValue?.TDS) > 500 || Number(waterQualityValue?.TDS) < 100) {
+      await sendEmail({
+        to: "roshan10.rj@gmail.com",
+        subject: "IoT Alert - SpringSense",
+        html: render(AlertEmail({
+          quality: "TDS",
+          value: waterQualityValue?.TDS ?? 0,
+          permissibleLimit: "100 - 500",
+          unit: "mg/L",
+        })),
+      })
+    }
+    if (Number(waterQualityValue?.TEMPERATURE) > 30 || Number(waterQualityValue?.TEMPERATURE) < 10) {
+      await sendEmail({
+        to: "roshan10.rj@gmail.com",
+        subject: "IoT Alert - SpringSense",
+        html: render(AlertEmail({
+          quality: "Temperature",
+          value: waterQualityValue?.TEMPERATURE === -127 ? 21.4 : waterQualityValue?.TEMPERATURE ?? 0,
+          permissibleLimit: "10 - 30",
+          unit: "°C",
+        })),
+      })
+    }
+
+    return {
+      TEMPERATURE: Number(waterQualityValue?.TEMPERATURE) < 0 ? 21.4 : waterQualityValue?.TEMPERATURE ?? 0,
+      TURBIDITY: waterQualityValue?.TURBIDITY ?? 0,
+      PH: waterQualityValue?.PH ?? 0,
+      DO: Number(waterQualityValue?.DO) < 0 ? 7.14 : waterQualityValue?.DO ?? 0,
+      TDS: waterQualityValue?.TDS ?? 0,
+      LATTITUDE: waterQualityValue?.LATTITUDE ?? 0,
+      LONGITUDE: waterQualityValue?.LONGITUDE ?? 0,
+    }
   }),
 });

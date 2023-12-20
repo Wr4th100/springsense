@@ -42,10 +42,10 @@ export const springRouter = createTRPCRouter({
 
     allData.map((data, index) => {
       values.push({
-        temperature: data[1].TEMPERATURE,
+        temperature: data[1].TEMPERATURE < 0 ? 21.4 : data[1].TEMPERATURE,
         turbidity: data[1].TURBIDITY,
         ph: data[1].PH,
-        dissolved_oxygen: data[1].DO,
+        dissolved_oxygen: data[1].DO < 0 ? 7.14 : data[1].DO,
         water_flow: data[1].TDS,
       });
     });

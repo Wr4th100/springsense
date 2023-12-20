@@ -13,7 +13,10 @@ const WeatherStation = () => {
   //   const currentHumidity = api.aq.getCurrentHumidity.useQuery();
   //   const currentHeatIndex = api.aq.getCurrentHeatIndex.useQuery();
 
-  const currentAirQuality = api.aq.getCurrentAirQuality.useQuery();
+  const currentAirQuality = api.aq.getCurrentAirQuality.useQuery(undefined, {
+    refetchInterval: 2000
+  });
+
 
   return (
     <div className="w-full space-y-4 rounded border p-8">

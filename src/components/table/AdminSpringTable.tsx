@@ -80,8 +80,8 @@ const AdminSpringTable = (props: Props) => {
       header: "Temperature",
     },
     {
-      accessorKey: "turbudity",
-      header: "Turbudity",
+      accessorKey: "turbidity",
+      header: "Turbidity",
     },
     {
       accessorKey: "ph",

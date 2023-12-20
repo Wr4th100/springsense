@@ -54,7 +54,7 @@ const SpringDetails = () => {
                 <AccordionContent>
                   <div className="flex flex-col justify-around md:flex-row">
                     <PhLineChart />
-                    <Card>
+                    <Card className="">
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">
                           pH Value

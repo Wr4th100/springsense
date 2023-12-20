@@ -10,7 +10,14 @@ import { Section } from "@react-email/section";
 import { Tailwind } from "@react-email/tailwind";
 import { Text } from "@react-email/text";
 
-const AlertEmail = () => {
+interface Props {
+  quality: string;
+  value: number;
+  permissibleLimit: string;
+  unit: string
+}
+
+const AlertEmail = (props: Props) => {
   return (
     <Tailwind>
       <Head />
@@ -19,7 +26,13 @@ const AlertEmail = () => {
         <Body className="bg-white font-sans dark:bg-zinc-900">
           <Container className="mx-auto my-10 w-full max-w-xl px-3">
             <Section className="">
-              <Text>There is an anomaly!</Text>
+              <Text className="text-2xl font-bold">There is an anomaly!</Text>
+            </Section>
+            <Section className="mt-4">
+              <Text className="text-xl font-bold">
+                {props.quality} is {props.value} ppm, for which permissible
+                limit is around {props.permissibleLimit} {props.unit}.
+              </Text>
             </Section>
           </Container>
         </Body>
