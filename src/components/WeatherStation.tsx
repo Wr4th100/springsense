@@ -19,7 +19,7 @@ const WeatherStation = () => {
 
 
   return (
-    <div className="m-4 space-y-4 rounded border p-8">
+    <div className="m-4 space-y-4 rounded border p-8 w-full">
       <div>
         <p className="text-2xl font-bold text-primary">Weather Station</p>
         <p>

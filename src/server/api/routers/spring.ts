@@ -7,7 +7,12 @@ import {
 } from "@/server/api/trpc";
 import { get, ref } from "firebase/database";
 import database from "@/lib/firebaseConfig";
-import type { ReceivingWaterData } from "@/types";
+import type {
+  ReceivingAirData,
+  ReceivingFlowData,
+  ReceivingWaterData,
+} from "@/types";
+import { convertDateStringToDateObject } from "@/lib/utils";
 
 export const springRouter = createTRPCRouter({
   findAllAdminPanel: publicProcedure.query(async ({ ctx }) => {
@@ -230,4 +235,111 @@ export const springRouter = createTRPCRouter({
         },
       });
     }),
+
+  noOfActiveSensors: publicProcedure.query(async ({ ctx }) => {
+    const aqRef = ref(database, "/MQ135&Temp");
+    const snapshot = await get(aqRef);
+    const allData: Array<
+      [
+        string,
+        {
+          Acetone: number;
+          AirQuality: string;
+          CO: number;
+          CO2: number;
+          Ethanol: number;
+          HeatIndex: number;
+          Humidity: number;
+          NH4: number;
+          Temperature: number;
+          Toluene: number;
+        },
+      ]
+    > = Object.entries(snapshot.val() as ReceivingAirData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+
+    const latestTimestamp = allData[allData.length - 1]?.[0];
+
+    const latestDateObj = convertDateStringToDateObject(latestTimestamp ?? "");
+
+    const wqRef = ref(database, "/WaterQualityResearch1");
+    const snapshot2 = await get(wqRef);
+    const allData2: Array<
+      [
+        string,
+        {
+          TEMPERATURE: number;
+          TURBIDITY: number;
+          PH: number;
+          DO: number;
+          TDS: number;
+          LATTITUDE: number;
+          LONGITUDE: number;
+        },
+      ]
+    > = Object.entries(snapshot2.val() as ReceivingWaterData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+
+    const latestTimestamp2 = allData2[allData2.length - 1]?.[0];
+
+    const latestDateObj2 = convertDateStringToDateObject(
+      latestTimestamp2 ?? "",
+    );
+
+    //  if the latest timestamp of the air quality is at max 5 minutes old
+    //  and the latest timestamp of the water quality is at max 5 minutes old
+    //  then the sensor is active
+
+    const isAirQualityActive =
+      new Date().getTime() - latestDateObj.getTime() <= 5 * 60 * 1000;
+
+    const isWaterQualityActive =
+      new Date().getTime() - latestDateObj2.getTime() <= 5 * 60 * 1000;
+
+    const flowRef = ref(database, "/FlowRateMachine");
+    const snapshot3 = await get(flowRef);
+    const allData3: Array<
+      [
+        string,
+        {
+          FlowRate: number;
+          TotalMillilitres: number;
+        },
+      ]
+    > = Object.entries(snapshot3.val() as ReceivingFlowData).map(
+      ([key, value]) => {
+        return [key, value];
+      },
+    );
+
+    const latestTimestamp3 = allData3[allData3.length - 1]?.[0];
+
+    const latestDateObj3 = convertDateStringToDateObject(
+      latestTimestamp3 ?? "",
+    );
+
+    const isFlowRateActive =
+    new Date().getTime() - latestDateObj3.getTime() <= 5 * 60 * 1000;
+
+    let countOfSensors = 0;
+    if (isAirQualityActive) {
+      countOfSensors += 2;
+    }
+    if (isWaterQualityActive) {
+      countOfSensors += 6;
+    }
+    if (isFlowRateActive) {
+      countOfSensors += 1;
+    }
+
+    return {
+      activeSensorCount: countOfSensors,
+    };
+  }),
 });

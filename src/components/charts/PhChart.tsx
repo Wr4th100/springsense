@@ -22,7 +22,11 @@ type Props = {
 
 
 const PhLineChart = (props:Props) => {
-  const phQuery = api.spring.findAllPh.useQuery();
+  const springStore = useSpring();
+  const ph = api.wq.getPH.useQuery(undefined, {
+    enabled: !!springStore.springName,
+    refetchInterval: 5000,
+  });
   // const ph = []
   // phValues.map((value) => {
   //   ph.push({date: v, pH: value.pH})
@@ -33,8 +37,8 @@ const PhLineChart = (props:Props) => {
     <LineChart
       width={props.width}
       height={props.height}
-      data={phQuery.data}
-      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+      data={ph.data}
+      margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
       className={props.className}
     >
       <CartesianGrid strokeDasharray="3 3" />

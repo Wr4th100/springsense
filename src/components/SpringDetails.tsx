@@ -48,7 +48,7 @@ const SpringDetails = () => {
             <p className="text-lg font-bold">Water Quality</p>
           </div> */}
           <div className="my-8 flex flex-col space-x-0 space-y-4 md:flex-row md:space-x-4 md:space-y-0">
-            <Accordion type="single" collapsible className="w-full px-8">
+            <Accordion type="single" collapsible className="w-full px-2 md:px-8">
               <AccordionItem value="item-1">
                 <AccordionTrigger>pH Analysis</AccordionTrigger>
                 <AccordionContent>

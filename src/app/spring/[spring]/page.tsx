@@ -11,6 +11,7 @@ import SpringAreaChart from "@/components/charts/SpringAreaChart";
 import slugify from "slugify";
 import { api } from "@/trpc/react";
 import { notFound } from "next/navigation";
+import ForecastData from "@/components/ForecastData";
 
 interface Props {
   params: {
@@ -54,11 +55,11 @@ const page = (props: Props) => {
 
   return (
     <div>
-      <div className="inline-block w-full bg-gradient-to-r from-cyan-500 via-blue-300 to-blue-500 bg-clip-text pt-9 text-center text-4xl font-extrabold text-transparent">
+      <div className="inline-block w-full bg-gradient-to-r from-cyan-500 via-blue-300 to-blue-500 bg-clip-text pt-10 text-center text-4xl font-extrabold text-transparent">
         Alagar Hills
       </div>
-      <div className="mx-11 my-8">
-        <p className="hidden md:flex items-center text-center lg:leading-8 subpixel-antialiased">
+      <div className="mx-2 md:mx-12 my-8">
+        <p className="hidden items-center text-center subpixel-antialiased md:flex lg:leading-8">
           Alagarkoil is comprised of three temples, one of which is up a steep
           flight of steps on the side of a hill, and the others some distance
           away from the base of the hill. The temples are about 20 km outside of
@@ -69,20 +70,21 @@ const page = (props: Props) => {
           shoes. It's a place of washing in the natural spring water for the
           purpose of purification and it's wet inside.
         </p>
-        <p className="flex md:hidden items-center text-center text-sm subpixel-antialiased">
+        <p className="flex items-center text-center text-sm subpixel-antialiased md:hidden">
           Alagarkoil is comprised of three temples, one of which is up a steep
           flight of steps on the side of a hill, and the others some distance
-          away from the base of the hill. It's a place of washing in the natural spring water for the
-          purpose of purification and it's wet inside.
+          away from the base of the hill. It's a place of washing in the natural
+          spring water for the purpose of purification and it's wet inside.
         </p>
       </div>
-      <div className="hidden lg:flex">
-      <WeatherStation />
+      <div className="hidden w-full lg:flex">
+        <WeatherStation />
       </div>
-      
-      <div className="m-10 flex flex-col space-x-0 space-y-4 md:flex-row md:space-x-4 md:space-y-0">
+
+      <div className="my-10 mx-2 md:mx-10 flex flex-col space-x-0 space-y-4 md:flex-row md:space-x-4 md:space-y-0">
         <div className="w-full md:w-1/2">
           <MapDisplay />
+          <ForecastData />
         </div>
         <div className="w-full space-y-2 md:w-1/2">
           <SelectMapType />

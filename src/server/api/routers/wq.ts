@@ -13,6 +13,7 @@ import AlertEmail from "../emails/AlertEmail";
 import { sendEmail } from "../mailer";
 import { convertDateStringToDateObject } from "@/lib/utils";
 import TimeMail from "../emails/TimeMail";
+import LocationEmail from "../emails/LocationEmail";
 
 export const wqRouter = createTRPCRouter({
   lastWaterQualityRow: publicProcedure.query(({ ctx }) => {
@@ -221,7 +222,7 @@ export const wqRouter = createTRPCRouter({
     // Check if the water quality data is sent every 5 minutes
     if (latestDate.getTime() < Date.now() - 5 * 60 * 1000) {
       await sendEmail({
-        to: "abhimai2004@gmail.com",
+        to: "roshan10.rj@gmail.com",
         subject: "IoT Reading Alert - Time Exceeded",
         html: render(
           TimeMail({
@@ -233,7 +234,18 @@ export const wqRouter = createTRPCRouter({
     }
 
     if (
-      Number(waterQualityValue?.PH) < 6.5 ||
+      Number(waterQualityValue?.LATTITUDE) / 10000 !== 10.11217445031641 &&
+      Number(waterQualityValue?.LONGITUDE) / 10000 !== 78.23546193193022
+    ) {
+      await sendEmail({
+        to: "roshan10.rj@gmail.com",
+        subject: "IoT Alert - SpringSense - Location Mismatch",
+        html: render(LocationEmail()),
+      });
+    }
+
+    if (
+      Number(waterQualityValue?.PH) < 6 ||
       Number(waterQualityValue?.PH) > 8.5
     ) {
       await sendEmail({
@@ -243,13 +255,13 @@ export const wqRouter = createTRPCRouter({
           AlertEmail({
             quality: "PH",
             value: waterQualityValue?.PH ?? 0,
-            permissibleLimit: "6.5 - 8.5",
+            permissibleLimit: "6 - 8.5",
             unit: "",
           }),
         ),
       });
     }
-    if (waterQualityValue?.DO ?? 0 < 10) {
+    if (waterQualityValue?.DO ?? 0 > 10) {
       await sendEmail({
         to: "roshan10.rj@gmail.com",
         subject: "IoT Alert - SpringSense",
@@ -277,10 +289,7 @@ export const wqRouter = createTRPCRouter({
         ),
       });
     }
-    if (
-      Number(waterQualityValue?.TDS) > 500 ||
-      Number(waterQualityValue?.TDS) < 100
-    ) {
+    if (Number(waterQualityValue?.TDS) > 500) {
       await sendEmail({
         to: "roshan10.rj@gmail.com",
         subject: "IoT Alert - SpringSense",
@@ -295,8 +304,16 @@ export const wqRouter = createTRPCRouter({
       });
     }
     if (
-      Number(waterQualityValue?.TEMPERATURE) > 30 ||
-      Number(waterQualityValue?.TEMPERATURE) < 10
+      Number(
+        waterQualityValue?.TEMPERATURE ?? 0 < 0
+          ? 21.4
+          : waterQualityValue?.TEMPERATURE,
+      ) > 30 ||
+      Number(
+        waterQualityValue?.TEMPERATURE ?? 0 < 0
+          ? 21.4
+          : waterQualityValue?.TEMPERATURE,
+      ) < 10
     ) {
       await sendEmail({
         to: "roshan10.rj@gmail.com",

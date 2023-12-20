@@ -1,14 +1,24 @@
 import React from "react";
 import { Nav } from "@/components/header/Menu";
 import { ModeToggle } from "@/components/theme/ModeToggle";
+import Link from "next/link";
+import { MobileNav } from "./MobileNav";
 
 const Header = () => {
   return (
-    <div className="flex justify-between border-b px-4 h-16 items-center ">
-
-      <div className=" text-lg lg:text-2xl font-bold">🌊 Springshed</div>
-      <Nav />
-      <ModeToggle />
+    <div className="flex h-16 items-center  border-b px-4 ">
+      <div>
+        <MobileNav />
+      </div>
+      <div className="flex items-center justify-between w-full">
+        <div className="flex items-center">
+          <div className=" text-lg font-bold lg:text-2xl mr-4">
+            <Link href={"/"}>🌊 Springshed</Link>
+          </div>
+          <Nav />
+        </div>
+        <ModeToggle />
+      </div>
     </div>
   );
 };

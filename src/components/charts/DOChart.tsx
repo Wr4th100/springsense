@@ -12,8 +12,11 @@ type Props = {
 };
 
 const DOLineChart = (props: Props) => {
-  const DOQuery = api.spring.findAllDO.useQuery();
-
+  const springStore = useSpring();
+  const DOQuery = api.wq.getDO.useQuery(undefined, {
+    enabled: !!springStore.springName,
+      refetchInterval: 5000,
+  })
   return (
     <LineChart
       width={props.width}

@@ -23,8 +23,12 @@ type Props = {
 
 
 const TurbidityLineChart = (props:Props) => {
-   const turbidityQuery = api.spring.findAllTurbidity.useQuery();
+  const springStore = useSpring();
 
+  const turbidityQuery = api.wq.getTurbidity.useQuery(undefined, {
+    enabled: !!springStore.springName,
+    refetchInterval: 5000,
+  });
   return (
     <LineChart
       width={props.width}

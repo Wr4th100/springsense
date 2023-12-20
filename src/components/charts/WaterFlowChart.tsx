@@ -15,7 +15,11 @@ type Props = {
 
 const WaterFlowLineChart = (props:Props) => {  
 
-  const WaterFlowQuery = api.spring.findAllWaterFlow.useQuery();
+  const springStore = useSpring();
+  const WaterFlowQuery = api.flow.getFlow.useQuery(undefined, {
+    enabled: !!springStore.springName,
+    refetchInterval: 5000,
+  });
   
   return (
     <LineChart

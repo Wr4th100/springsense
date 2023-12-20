@@ -10,19 +10,12 @@ import { Section } from "@react-email/section";
 import { Tailwind } from "@react-email/tailwind";
 import { Text } from "@react-email/text";
 
-interface Props {
-  quality: string;
-  value: number;
-  permissibleLimit: string;
-  unit: string;
-}
-
-const AlertEmail = (props: Props) => {
+const LocationEmail = () => {
   return (
     <Tailwind>
       <Head />
       <Html>
-        <Preview>IoT Alert: Spring 2</Preview>
+        <Preview>IoT Alert: Location Mismatch</Preview>
         <Body className="bg-white font-sans dark:bg-zinc-900">
           <Container className="mx-auto my-10 w-full max-w-xl px-3">
             <Section className="">
@@ -30,9 +23,8 @@ const AlertEmail = (props: Props) => {
             </Section>
             <Section className="mt-4">
               <Text className="text-xl font-bold">
-                {props.quality} is {props.value} {props.unit}, for which
-                permissible limit is around {props.permissibleLimit}{" "}
-                {props.unit}. 
+                The device is not in the location it is supposed to be. Please
+                check the device. Please check the device.
               </Text>
             </Section>
           </Container>
@@ -42,4 +34,4 @@ const AlertEmail = (props: Props) => {
   );
 };
 
-export default AlertEmail;
+export default LocationEmail;

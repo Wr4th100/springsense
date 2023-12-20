@@ -43,7 +43,8 @@ const MapDisplay = () => {
       {mapType.mapType === "waterShedMap" && (
         <MapComponent
           kmlFile={
-            "https://uploadthing.com/f/b838ed4c-6e32-4f51-81fc-e043da0ba239-2zqd35.kml"
+            // "https://uploadthing.com/f/45fe1ae9-81b1-44f4-97ef-1e9faff80dad-2zqbvz.kml"
+            "https://uploadthing.com/f/0c4f2591-9c48-4d22-bd43-2b0f03365a09-saqnza.kml"
           }
           zoom={13}
         />
@@ -51,6 +52,16 @@ const MapDisplay = () => {
       {mapType.mapType === "waterShedMapImage" && (
         <ImageMapComp image="https://uploadthing.com/f/4379616b-f5ee-4a41-8d82-504817636c0d-hz4156.png" />
       )}
+      {
+        mapType.mapType === "topographyMapImage" && (
+          <ImageMapComp image="https://uploadthing.com/f/a35a3d58-a051-4588-972b-225248e3749c-mo3jz.png" />
+        )
+      }
+      {
+        mapType.mapType === "hydrogeologicalMapImage" && (
+          <ImageMapComp image="https://uploadthing.com/f/52f0b58f-3a82-4c16-8e58-178df876ba27-cn95rc.png" />
+        )
+      }
       {mapType.mapType === "contourMap3D" && (
         <View
           className="flex h-[400px] w-full flex-col items-center justify-center rounded-md border md:h-[700px]"
