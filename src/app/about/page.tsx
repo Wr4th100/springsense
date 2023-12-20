@@ -14,7 +14,7 @@ const About = () => {
           delay: 0.5,
           ease: [0, 0.71, 0.2, 1.01],
         }}
-        className="main-area flex w-full flex-col items-center justify-center"
+        className="m-6 flex w-full flex-col items-center justify-center"
       >
         <h1 className="inline-block bg-gradient-to-r from-cyan-500 via-blue-300 to-blue-500 bg-clip-text pt-9 text-center text-5xl font-extrabold text-transparent ">
           Overview
@@ -61,7 +61,7 @@ const About = () => {
           delay: 0.5,
           ease: [0, 0.71, 0.2, 1.01],
         }}
-        className="main-area flex w-full flex-col items-center justify-center"
+        className="m-6 flex w-full flex-col items-center justify-center"
       >
       <div className="flex items-center justify-center">
         <Image
@@ -80,7 +80,7 @@ const About = () => {
           delay: 0.5,
           ease: [0, 0.71, 0.2, 1.01],
         }}
-        className="main-area flex w-full flex-col items-center justify-center"
+        className="m-6 flex w-full flex-col items-center justify-center"
       >
         <h1 className="inline-block bg-gradient-to-r from-cyan-500 via-blue-300 to-blue-500 bg-clip-text pt-9 text-center text-5xl font-extrabold text-transparent ">
           Springshed
@@ -110,7 +110,7 @@ const About = () => {
           delay: 0.5,
           ease: [0, 0.71, 0.2, 1.01],
         }}
-        className="main-area flex w-full flex-col items-center justify-center"
+        className="m-6 flex w-full flex-col items-center justify-center"
       >
       <div className="flex items-center justify-center my-5">
         <Image
@@ -129,7 +129,7 @@ const About = () => {
           delay: 0.5,
           ease: [0, 0.71, 0.2, 1.01],
         }}
-        className="main-area flex w-full flex-col items-center justify-center"
+        className="m-6 flex w-full flex-col items-center justify-center"
       >
         <h1 className="inline-block bg-gradient-to-r from-cyan-500 via-blue-300 to-blue-500 bg-clip-text pt-9 text-center text-5xl font-extrabold text-transparent ">Types of Springs</h1>
         <p className="my-5 font-medium leading-7 mx-24 text-center text-lg">
@@ -143,7 +143,7 @@ const About = () => {
           springs are classified into five types.
         </p>
       </motion.div>
-    </div>
+   </div>
   );
 };
 

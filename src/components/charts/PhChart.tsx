@@ -14,20 +14,28 @@ import {
   YAxis,
 } from "recharts";
 
-const PhLineChart = () => {
-  const springStore = useSpring();
+type Props = {
+  width: number;
+  height: number;
+  className?: string;
+};
 
-  const ph = api.wq.getPH.useQuery(undefined, {
-    enabled: !!springStore.springName,
-    refetchInterval: 5000,
-  });
+
+const PhLineChart = (props:Props) => {
+  const phQuery = api.spring.findAllPh.useQuery();
+  // const ph = []
+  // phValues.map((value) => {
+  //   ph.push({date: v, pH: value.pH})
+  // })
+
 
   return (
     <LineChart
-      width={630}
-      height={550}
-      data={ph.data}
+      width={props.width}
+      height={props.height}
+      data={phQuery.data}
       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+      className={props.className}
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="date">

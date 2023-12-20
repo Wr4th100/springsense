@@ -58,7 +58,7 @@ const page = (props: Props) => {
         Alagar Hills
       </div>
       <div className="mx-11 my-8">
-        <p>
+        <p className="hidden md:flex items-center text-center lg:leading-8 subpixel-antialiased">
           Alagarkoil is comprised of three temples, one of which is up a steep
           flight of steps on the side of a hill, and the others some distance
           away from the base of the hill. The temples are about 20 km outside of
@@ -69,8 +69,17 @@ const page = (props: Props) => {
           shoes. It's a place of washing in the natural spring water for the
           purpose of purification and it's wet inside.
         </p>
+        <p className="flex md:hidden items-center text-center text-sm subpixel-antialiased">
+          Alagarkoil is comprised of three temples, one of which is up a steep
+          flight of steps on the side of a hill, and the others some distance
+          away from the base of the hill. It's a place of washing in the natural spring water for the
+          purpose of purification and it's wet inside.
+        </p>
       </div>
+      <div className="hidden lg:flex">
       <WeatherStation />
+      </div>
+      
       <div className="m-10 flex flex-col space-x-0 space-y-4 md:flex-row md:space-x-4 md:space-y-0">
         <div className="w-full md:w-1/2">
           <MapDisplay />

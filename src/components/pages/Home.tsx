@@ -11,7 +11,7 @@ import RealtimeDB from "../RealtimeDB";
 
 const HomePage = () => {
   return (
-    <div>
+    <div >
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -20,15 +20,41 @@ const HomePage = () => {
           delay: 0.5,
           ease: [0, 0.71, 0.2, 1.01],
         }}
-        className="main-area flex w-full flex-col items-center justify-center"
+        className="hidden md:flex main-area w-full flex-col items-center justify-center"
       >
         <div className="flex justify-center">
-          <h1 className="inline-block bg-gradient-to-r from-cyan-500 via-blue-300 to-blue-500 bg-clip-text pt-9 text-center text-6xl font-extrabold text-transparent">
+          <h1 className="inline-block bg-gradient-to-r from-cyan-500 via-blue-300 to-blue-500 bg-clip-text pt-9 text-center text-xl md:text-6xl font-extrabold text-transparent">
             Spring Shed Management <br /> of the new age
           </h1>
         </div>
-        <div className="mx-72 mb-5 mt-5 flex justify-center text-base ">
-          <p className="flex items-center text-center leading-8 subpixel-antialiased">
+        <div className="hidden md:flex mx-72 mb-5 mt-6 justify-center text-lg ">
+          <p className="hidden md:flex items-center text-center leading-8 subpixel-antialiased">
+            Explore and monitor the health of springsheds with our comprehensive
+            management dashboard. Gain insights into current water levels,
+            weather conditions, and historical trends to make informed decisions
+            for sustainable water spring resource management. Stay informed
+            about alerts and utilize powerful analytics tools for effective
+            springshed conservation.
+          </p>
+        </div>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          duration: 0.8,
+          delay: 0.5,
+          ease: [0, 0.71, 0.2, 1.01],
+        }}
+        className="md:hidden p-5 w-full flex-col items-center justify-center"
+      >
+        <div className="flex justify-center">
+          <h1 className="inline-block bg-gradient-to-r from-cyan-500 via-blue-300 to-blue-500 bg-clip-text pt-9 text-center text-xl md:text-6xl font-extrabold text-transparent">
+            Spring Shed Management <br /> of the new age
+          </h1>
+        </div>
+        <div className="md:hidden m-5">
+        <p className="md:hidden py-6 flex items-center text-center text-xs subpixel-antialiased">
             Explore and monitor the health of springsheds with our comprehensive
             management dashboard. Gain insights into current water levels,
             weather conditions, and historical trends to make informed decisions
@@ -49,7 +75,7 @@ const HomePage = () => {
         }}
         className="w-full"
       >
-        <p className="flex items-center justify-center text-center text-4xl font-bold leading-8 subpixel-antialiased">
+        <p className="hidden md:flex items-center justify-center text-center lg:text-4xl font-bold leading-8 subpixel-antialiased">
           All the data at your fingertips
         </p>
         <DashboardPage />
@@ -79,8 +105,8 @@ const HomePage = () => {
         </div>
       </div> */}
 
-      <div className="flex flex-col items-center justify-center py-12">
-        <p className="flex items-center justify-center text-center text-4xl font-bold leading-8 subpixel-antialiased">
+      <div className="hidden md:flex flex-col items-center justify-center py-12">
+        <p className="flex items-center justify-center text-center lg:text-4xl font-bold leading-8 subpixel-antialiased">
           Go to dashboard
         </p>
         {/* <div className="flex items-center justify-center">
@@ -88,7 +114,22 @@ const HomePage = () => {
         </div> */}
         <div className="m-3">
           <Link href={"/dashboard"}>
-            <Button size={"lg"}>
+            <Button >
+              <p>View All</p>
+            </Button>
+          </Link>
+        </div>
+      </div>
+      <div className="md:hidden flex flex-col items-center justify-center ">
+        <p className="flex items-center justify-center text-center lg:text-4xl font-bold  subpixel-antialiased">
+          Go to dashboard
+        </p>
+        {/* <div className="flex items-center justify-center">
+          <Globe />
+        </div> */}
+        <div className="m-3">
+          <Link href={"/dashboard"}>
+            <Button >
               <p>View All</p>
             </Button>
           </Link>

@@ -12,12 +12,17 @@ const DashboardPage = () => {
     <div className="flex w-full">
       <div className="w-1/2">
         {/* <Skeleton className="h-screen" /> */}
-        <MainMap kmlFile="https://uploadthing.com/f/755eaa25-0b78-408d-904c-61db31ec543a-ugaupf.kml" zoom={6} />
+        <MainMap
+          kmlFile="https://uploadthing.com/f/755eaa25-0b78-408d-904c-61db31ec543a-ugaupf.kml"
+          zoom={6}
+        />
       </div>
-      <div className="w-1/2 p-4">
-        <div className="w-full rounded border p-4">
+      <div className="p-4 lg:w-1/2">
+        <div className="rounded border p-4 lg:w-full">
           <p>
-            <span className="text-4xl font-bold text-primary">All Springs</span>
+            <span className="font-bold text-primary lg:text-4xl">
+              All Springs
+            </span>
           </p>
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
@@ -28,11 +33,13 @@ const DashboardPage = () => {
               ease: [0, 0.71, 0.2, 1.01],
             }}
           >
-            <div className="mt-8">
-              <div className="flex items-center justify-between rounded border p-2">
+            <div className="mt-6 lg:mt-8">
+              <div className="items-center justify-between rounded border p-2 lg:flex">
                 <p>Azhagar Hill SpringShed</p>
                 <Link href={"/spring/azhagar-hill-springshed"}>
-                  <Button>View</Button>
+                  <div className="mt-5 flex items-center justify-center">
+                    <Button>View</Button>
+                  </div>
                 </Link>
               </div>
             </div>
