@@ -8,6 +8,7 @@ import {
 import { get, ref } from "firebase/database";
 import database from "@/lib/firebaseConfig";
 import type { ReceivingAirData, ReceivingWaterData } from "@/types";
+import { convertDateStringToDateObject } from "@/lib/utils";
 
 export const aqRouter = createTRPCRouter({
   lastAirQualityRow: publicProcedure.query(({ ctx }) => {
@@ -534,10 +535,11 @@ export const aqRouter = createTRPCRouter({
     );
 
     // eslint-disable-next-line
-    const airQualityValue = allData[allData.length - 1]?.[1]
+    const airQualityValue = allData[allData.length - 1]?.[1];
 
-    return airQualityValue;
-  }
-  ),
-
+    return {
+      ...airQualityValue,
+      date: convertDateStringToDateObject(allData[allData.length - 1]?.[0] ?? ""),
+    };
+  }),
 });

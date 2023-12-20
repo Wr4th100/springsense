@@ -11,6 +11,8 @@ import database from "@/lib/firebaseConfig";
 import type { ReceivingWaterData } from "@/types";
 import AlertEmail from "../emails/AlertEmail";
 import { sendEmail } from "../mailer";
+import { convertDateStringToDateObject } from "@/lib/utils";
+import TimeMail from "../emails/TimeMail";
 
 export const wqRouter = createTRPCRouter({
   lastWaterQualityRow: publicProcedure.query(({ ctx }) => {
@@ -211,77 +213,119 @@ export const wqRouter = createTRPCRouter({
       },
     );
 
+    const latestDate = convertDateStringToDateObject(
+      allData[allData.length - 1]?.[0] ?? "",
+    );
     const waterQualityValue = allData[allData.length - 1]?.[1];
 
-    if (Number(waterQualityValue?.PH) < 6.5 || Number(waterQualityValue?.PH) > 8.5) {
+    // Check if the water quality data is sent every 5 minutes
+    if (latestDate.getTime() < Date.now() - 5 * 60 * 1000) {
+      await sendEmail({
+        to: "abhimai2004@gmail.com",
+        subject: "IoT Reading Alert - Time Exceeded",
+        html: render(
+          TimeMail({
+            value: latestDate.getTime() - new Date().getTime(),
+            permissibleLimit: "5 minutes",
+          }),
+        ),
+      });
+    }
+
+    if (
+      Number(waterQualityValue?.PH) < 6.5 ||
+      Number(waterQualityValue?.PH) > 8.5
+    ) {
       await sendEmail({
         to: "roshan10.rj@gmail.com",
         subject: "IoT Alert - SpringSense",
-        html: render(AlertEmail({
-          quality: "PH",
-          value: waterQualityValue?.PH ?? 0,
-          permissibleLimit: "6.5 - 8.5",
-          unit: "",
-        })),
+        html: render(
+          AlertEmail({
+            quality: "PH",
+            value: waterQualityValue?.PH ?? 0,
+            permissibleLimit: "6.5 - 8.5",
+            unit: "",
+          }),
+        ),
       });
     }
     if (waterQualityValue?.DO ?? 0 < 10) {
       await sendEmail({
         to: "roshan10.rj@gmail.com",
         subject: "IoT Alert - SpringSense",
-        html: render(AlertEmail({
-          quality: "DO",
-          value: 7.14,
-          permissibleLimit: "> 10",
-          unit: "mg/L",
-        })),
-      })
+        html: render(
+          AlertEmail({
+            quality: "DO",
+            value: 7.14,
+            permissibleLimit: "> 10",
+            unit: "mg/L",
+          }),
+        ),
+      });
     }
     if (waterQualityValue?.TURBIDITY ?? 0 > 10) {
       await sendEmail({
         to: "roshan10.rj@gmail.com",
         subject: "IoT Alert - SpringSense",
-        html: render(AlertEmail({
-          quality: "Turbidity",
-          value: waterQualityValue?.TURBIDITY ?? 0,
-          permissibleLimit: "< 10",
-          unit: "NTU",
-        })),
-      })
+        html: render(
+          AlertEmail({
+            quality: "Turbidity",
+            value: waterQualityValue?.TURBIDITY ?? 0,
+            permissibleLimit: "< 10",
+            unit: "NTU",
+          }),
+        ),
+      });
     }
-    if (Number(waterQualityValue?.TDS) > 500 || Number(waterQualityValue?.TDS) < 100) {
+    if (
+      Number(waterQualityValue?.TDS) > 500 ||
+      Number(waterQualityValue?.TDS) < 100
+    ) {
       await sendEmail({
         to: "roshan10.rj@gmail.com",
         subject: "IoT Alert - SpringSense",
-        html: render(AlertEmail({
-          quality: "TDS",
-          value: waterQualityValue?.TDS ?? 0,
-          permissibleLimit: "100 - 500",
-          unit: "mg/L",
-        })),
-      })
+        html: render(
+          AlertEmail({
+            quality: "TDS",
+            value: waterQualityValue?.TDS ?? 0,
+            permissibleLimit: "100 - 500",
+            unit: "mg/L",
+          }),
+        ),
+      });
     }
-    if (Number(waterQualityValue?.TEMPERATURE) > 30 || Number(waterQualityValue?.TEMPERATURE) < 10) {
+    if (
+      Number(waterQualityValue?.TEMPERATURE) > 30 ||
+      Number(waterQualityValue?.TEMPERATURE) < 10
+    ) {
       await sendEmail({
         to: "roshan10.rj@gmail.com",
         subject: "IoT Alert - SpringSense",
-        html: render(AlertEmail({
-          quality: "Temperature",
-          value: waterQualityValue?.TEMPERATURE === -127 ? 21.4 : waterQualityValue?.TEMPERATURE ?? 0,
-          permissibleLimit: "10 - 30",
-          unit: "°C",
-        })),
-      })
+        html: render(
+          AlertEmail({
+            quality: "Temperature",
+            value:
+              waterQualityValue?.TEMPERATURE === -127
+                ? 21.4
+                : waterQualityValue?.TEMPERATURE ?? 0,
+            permissibleLimit: "10 - 30",
+            unit: "°C",
+          }),
+        ),
+      });
     }
 
     return {
-      TEMPERATURE: Number(waterQualityValue?.TEMPERATURE) < 0 ? 21.4 : waterQualityValue?.TEMPERATURE ?? 0,
+      TEMPERATURE:
+        Number(waterQualityValue?.TEMPERATURE) < 0
+          ? 21.4
+          : waterQualityValue?.TEMPERATURE ?? 0,
       TURBIDITY: waterQualityValue?.TURBIDITY ?? 0,
       PH: waterQualityValue?.PH ?? 0,
       DO: Number(waterQualityValue?.DO) < 0 ? 7.14 : waterQualityValue?.DO ?? 0,
       TDS: waterQualityValue?.TDS ?? 0,
       LATTITUDE: waterQualityValue?.LATTITUDE ?? 0,
       LONGITUDE: waterQualityValue?.LONGITUDE ?? 0,
-    }
+    };
   }),
 });

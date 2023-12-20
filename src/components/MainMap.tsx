@@ -16,9 +16,12 @@ import "leaflet-defaulticon-compatibility";
 import useSpring from "@/hooks/use-spring";
 import type { KmlJSON } from "@/types";
 import { capitalizeAllCaseWords } from "@/lib/utils";
+import { api } from "@/trpc/react";
+import Link from "next/link";
+import slugify from "slugify";
 
-const MapComponent = ({ kmlFile, zoom }: { kmlFile: string, zoom: number }) => {
-  const springStore = useSpring();
+const MainMap = ({ kmlFile, zoom }: { kmlFile: string; zoom: number }) => {
+
   const [kml, setKml] = React.useState<Document>();
   const [kmlJSON, setKmlJSON] = React.useState<KmlJSON>();
 
@@ -28,7 +31,7 @@ const MapComponent = ({ kmlFile, zoom }: { kmlFile: string, zoom: number }) => {
       const kmlFetch = await fetch(kmlFile);
       const kmlText = await kmlFetch.text();
       const kmlStuff = parser.parseFromString(kmlText, "text/xml");
-      console.log("KML STUFF" , kmlStuff);
+      console.log("KML STUFF", kmlStuff);
       setKml(kmlStuff);
       const resJS = await fetch("/api/kml", {
         method: "POST",
@@ -63,7 +66,12 @@ const MapComponent = ({ kmlFile, zoom }: { kmlFile: string, zoom: number }) => {
         {kml && <ReactLeafletKml kml={kml} />}
         {kmlJSON
           ? kmlJSON.features.map((feature, index) => {
-              if (feature.geometry.type === "Polygon" || feature.geometry.type === "LineString") return;
+              if (
+                feature.geometry.type === "Polygon" ||
+                feature.geometry.type === "LineString"
+              )
+                return;
+              console.log("FEATURE", feature.properties.name);
               return (
                 <Marker
                   position={[
@@ -80,19 +88,20 @@ const MapComponent = ({ kmlFile, zoom }: { kmlFile: string, zoom: number }) => {
                       ({feature.geometry.coordinates[1]},{" "}
                       {feature.geometry.coordinates[0]})
                     </p>
-                    <Button
-                      onClick={() => {
-                        console.log("clicked");
-                        springStore.addSpring(
-                          feature.properties.name,
-                          feature.geometry.coordinates[1] as number,
-                          feature.geometry.coordinates[0] as number,
-                        );
-                      }}
-                      className="mt-2 w-full"
+                    <Link
+                      href={`/spring/${slugify(feature.properties.name, {
+                        lower: true,
+                      })}`}
                     >
-                      See More
-                    </Button>
+                      <Button
+                        onClick={() => {
+                          console.log("clicked");
+                        }}
+                        className="mt-2 w-full"
+                      >
+                        Go to Dashboard
+                      </Button>
+                    </Link>
                   </Popup>
                 </Marker>
               );
@@ -103,4 +112,4 @@ const MapComponent = ({ kmlFile, zoom }: { kmlFile: string, zoom: number }) => {
   );
 };
 
-export default MapComponent;
+export default MainMap;

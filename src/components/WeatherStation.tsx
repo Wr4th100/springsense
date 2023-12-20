@@ -19,9 +19,12 @@ const WeatherStation = () => {
 
 
   return (
-    <div className="w-full space-y-4 rounded border p-8">
+    <div className="m-4 space-y-4 rounded border p-8">
       <div>
         <p className="text-2xl font-bold text-primary">Weather Station</p>
+        <p>
+          Last Updated: { currentAirQuality.data?.date ? currentAirQuality.data.date.toLocaleString() : "N/A"}
+        </p>
       </div>
       <div className="grid grid-cols-3 space-x-4 ">
         <div className="space-y-4">

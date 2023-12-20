@@ -50,9 +50,7 @@ export const springRouter = createTRPCRouter({
       });
     });
 
-    return values
-    
-
+    return values;
   }),
   findAllPh: publicProcedure.query(({ ctx }) => {
     return [
@@ -214,4 +212,22 @@ export const springRouter = createTRPCRouter({
       { date: "2023-01-02", water_flow: 346 },
     ];
   }),
+
+  findAllSprings: publicProcedure.query(async ({ ctx }) => {
+    return ctx.db.springShed.findMany();
+  }),
+
+  findSpringByName: publicProcedure
+    .input(
+      z.object({
+        name: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return ctx.db.springShed.findFirst({
+        where: {
+          name: input.name,
+        },
+      });
+    }),
 });

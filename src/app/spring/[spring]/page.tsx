@@ -8,8 +8,50 @@ import WeatherStation from "@/components/WeatherStation";
 import { PowerBIEmbed } from "powerbi-client-react";
 import { models, Report } from "powerbi-client";
 import SpringAreaChart from "@/components/charts/SpringAreaChart";
+import slugify from "slugify";
+import { api } from "@/trpc/react";
+import { notFound } from "next/navigation";
 
-const page = () => {
+interface Props {
+  params: {
+    spring: string;
+  };
+}
+
+const page = (props: Props) => {
+  const springs = api.spring.findAllSprings.useQuery();
+
+  let available = false;
+  !springs.isLoading &&
+    springs.data?.map((spring) => {
+      if (slugify(spring.name, { lower: true }) === props.params.spring) {
+        available = true;
+        console.log(slugify(spring.name, { lower: true }));
+        // springNow = spring;
+      }
+    });
+
+  if (props.params.spring == "alagar-hills-springshed") available = true;
+
+  if (!available) {
+    return (
+      // <div className="h-full w-full flex justify-center items-center">
+      //   <p>
+      //     This springshed has not been mapped yet.
+      //   </p>
+      // </div>
+      notFound()
+    );
+  }
+
+  if (props.params.spring != "alagar-hills-springshed") {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <p>This springshed has not been mapped yet.</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="inline-block w-full bg-gradient-to-r from-cyan-500 via-blue-300 to-blue-500 bg-clip-text pt-9 text-center text-4xl font-extrabold text-transparent">
@@ -36,9 +78,7 @@ const page = () => {
         <div className="w-full space-y-2 md:w-1/2">
           <SelectMapType />
           <SpringDetails />
-          
         </div>
-        
       </div>
       <div className="h-screen">
         {/* <SpringAreaChart />
@@ -90,7 +130,7 @@ const page = () => {
               window.report = embeddedReport as Report; // 
             }}
           /> */}
-    </div>
+      </div>
     </div>
   );
 };
