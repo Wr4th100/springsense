@@ -55,7 +55,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function Nav() {
   return (
-    <NavigationMenu>
+    <NavigationMenu className="hidden md:flex">
       <NavigationMenuList>
       <NavigationMenuItem>
           <Link href="/" legacyBehavior passHref>

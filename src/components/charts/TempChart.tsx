@@ -6,13 +6,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from "recharts";
 
 type Props = {
-  tempValues: {
-    date: string;
-    temperature: number;
-  }[];
+  width: number;
+  height: number;
+  className?: string;
 };
 
-const TempLineChart = () => {
+const TempLineChart = (props:Props) => {
   // const timeoutRef = useRef(null);
   const springStore = useSpring();
   // const [arr, setArr] = useState<{ date: string; temperature: number }[]>([]);
@@ -41,10 +40,11 @@ const TempLineChart = () => {
 
   return (
     <LineChart
-      width={630}
-      height={550}
+      width={props.width}
+      height={props.height}
       data={temperature.data}
       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+      className={props.className}
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="date" />

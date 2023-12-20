@@ -48,8 +48,9 @@ const SpringDetails = () => {
               <AccordionItem value="item-1">
                 <AccordionTrigger>pH Analysis</AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex flex-col justify-around md:flex-row">
-                    <PhLineChart />
+                  <div className="flex flex-col justify-around md:flex-row">                    
+                    <PhLineChart className={"hidden md:flex"} width={330} height={250} />
+                    <PhLineChart className={"md:hidden"} width={230} height={150} />
                     <Card>
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">
@@ -70,7 +71,8 @@ const SpringDetails = () => {
                 <AccordionTrigger>Turbidity Analysis</AccordionTrigger>
                 <AccordionContent>
                   <div className="flex flex-col justify-around md:flex-row">
-                    <TurbidityLineChart />
+                  <TurbidityLineChart className={"hidden md:flex"} width={330} height={250} />
+                    <TurbidityLineChart className={"md:hidden"} width={230} height={150} />
                     <Card>
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">
@@ -93,7 +95,8 @@ const SpringDetails = () => {
                 <AccordionTrigger>Temperature Analysis</AccordionTrigger>
                 <AccordionContent>
                   <div className="flex flex-col justify-around md:flex-row">
-                    <TempLineChart />
+                  <TempLineChart className={"hidden md:flex"} width={330} height={250} />
+                    <TempLineChart className={"md:hidden"} width={230} height={150} />
                     {/* <Card>
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">
@@ -116,7 +119,8 @@ const SpringDetails = () => {
                 <AccordionTrigger>Dissolved Oxygen Analysis</AccordionTrigger>
                 <AccordionContent>
                   <div className="flex flex-col justify-around md:flex-row">
-                    <DOLineChart />
+                    <DOLineChart className={"hidden md:flex"} width={330} height={250} />
+                    <DOLineChart className={"md:hidden"} width={230} height={150} />
                     <Card>
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">
@@ -124,7 +128,7 @@ const SpringDetails = () => {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <div className="text-2xl font-bold">
+                        <div className="md:text-2xl text-sm font-bold">
                           7.2 <span className="text-sm">mg/L</span>
                         </div>
                         <p className="text-xs text-muted-foreground">
@@ -138,7 +142,8 @@ const SpringDetails = () => {
               <AccordionItem value="item-5">
                 <AccordionTrigger>Water Flow Analysis</AccordionTrigger>
                 <AccordionContent>
-                  <WaterFlowLineChart />
+                <WaterFlowLineChart className={"hidden md:flex"} width={330} height={250} />
+                    <WaterFlowLineChart  className={"md:hidden"} width={230} height={150} />
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -150,7 +155,7 @@ const SpringDetails = () => {
               <TurbidityLineChart/>
             </div> */}
           </div>
-          <div className="mt-4">
+          <div className="hidden md:flex mt-4 ">
             <AdminSpringTable data={springData!} />
           </div>
         </div>

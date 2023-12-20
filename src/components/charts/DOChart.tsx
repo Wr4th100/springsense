@@ -1,21 +1,25 @@
-"use client"
+"use client";
 
 import { api } from "@/trpc/react";
 import React, { useState } from "react";
 import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from "recharts";
 
-// type Props = {}
+type Props = {
+  width: number;
+  height: number;
+  className?: string;
+};
 
-const DOLineChart = () => {  
-
+const DOLineChart = (props: Props) => {
   const DOQuery = api.spring.findAllDO.useQuery();
-  
+
   return (
     <LineChart
-      width={330}
-      height={250}
+      width={props.width}
+      height={props.height}
       data={DOQuery.data}
       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+      className={props.className}
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="date" label={Date} />

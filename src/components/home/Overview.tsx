@@ -13,7 +13,17 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const Overview = () => {
+type Props = {
+  width: number;
+  height: number;
+  className?: string;
+  minWidth: number;
+  minHeight: number;
+
+};
+
+
+const Overview = (props:Props) => {
   const { data: phData } = api.spring.findAllPh.useQuery();
   const { data: tempData } = api.spring.findAllTemperature.useQuery();
   const { data: turbidData } = api.spring.findAllTurbidity.useQuery();
@@ -81,14 +91,15 @@ const Overview = () => {
 
   return (
     <ResponsiveContainer
-      minWidth={740}
-      minHeight={300}
+      minWidth={props.minWidth}
+      minHeight={props.minHeight}
       className="w-[90px] md:w-[300px] lg:w-[750px]"
     >
       <LineChart
-        width={750}
-        height={400}
+        width={props.width}
+        height={props.height}
         data={data}
+        className={props.className}
         // className="h-[400px] w-[400px]"
       >
         <CartesianGrid strokeDasharray="3 3" />
