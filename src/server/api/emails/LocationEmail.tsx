@@ -12,10 +12,10 @@ import { Text } from "@react-email/text";
 
 const LocationEmail = () => {
   return (
-    <Tailwind>
-      <Html>
-        <Head />
-        <Preview>IoT Alert: Location Mismatch</Preview>
+    <Html>
+      <Head />
+      <Preview>IoT Alert: Location Mismatch</Preview>
+      <Tailwind>
         <Body className="bg-white font-sans dark:bg-zinc-900">
           <Container className="mx-auto my-10 w-full max-w-xl px-3">
             <Section className="">
@@ -29,8 +29,8 @@ const LocationEmail = () => {
             </Section>
           </Container>
         </Body>
-      </Html>
-    </Tailwind>
+      </Tailwind>
+    </Html>
   );
 };
 

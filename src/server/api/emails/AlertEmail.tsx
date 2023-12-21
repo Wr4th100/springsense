@@ -19,10 +19,10 @@ interface Props {
 
 const AlertEmail = (props: Props) => {
   return (
-    <Tailwind>
-      <Html>
-        <Head />
-        <Preview>IoT Alert: Spring 2</Preview>
+    <Html>
+      <Head />
+      <Preview>IoT Alert: Spring 2</Preview>
+      <Tailwind>
         <Body className="bg-white font-sans dark:bg-zinc-900">
           <Container className="mx-auto my-10 w-full max-w-xl px-3">
             <Section className="">
@@ -37,8 +37,8 @@ const AlertEmail = (props: Props) => {
             </Section>
           </Container>
         </Body>
-      </Html>
-    </Tailwind>
+      </Tailwind>
+    </Html>
   );
 };
 

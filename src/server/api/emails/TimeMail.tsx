@@ -17,10 +17,10 @@ interface Props {
 
 const TimeMail = (props: Props) => {
   return (
-    <Tailwind>
-      <Html>
-        <Head />
-        <Preview>IoT Alert</Preview>
+    <Html>
+      <Head />
+      <Preview>IoT Alert</Preview>
+      <Tailwind>
         <Body className="bg-white font-sans dark:bg-zinc-900">
           <Container className="mx-auto my-10 w-full max-w-xl px-3">
             <Section className="">
@@ -34,8 +34,8 @@ const TimeMail = (props: Props) => {
             </Section>
           </Container>
         </Body>
-      </Html>
-    </Tailwind>
+      </Tailwind>
+    </Html>
   );
 };
 
