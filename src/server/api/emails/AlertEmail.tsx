@@ -20,8 +20,8 @@ interface Props {
 const AlertEmail = (props: Props) => {
   return (
     <Tailwind>
-      <Head />
       <Html>
+        <Head />
         <Preview>IoT Alert: Spring 2</Preview>
         <Body className="bg-white font-sans dark:bg-zinc-900">
           <Container className="mx-auto my-10 w-full max-w-xl px-3">
@@ -32,7 +32,7 @@ const AlertEmail = (props: Props) => {
               <Text className="text-xl font-bold">
                 {props.quality} is {props.value} {props.unit}, for which
                 permissible limit is around {props.permissibleLimit}{" "}
-                {props.unit}. 
+                {props.unit}.
               </Text>
             </Section>
           </Container>

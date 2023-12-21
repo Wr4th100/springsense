@@ -18,8 +18,8 @@ interface Props {
 const TimeMail = (props: Props) => {
   return (
     <Tailwind>
-      <Head />
       <Html>
+        <Head />
         <Preview>IoT Alert</Preview>
         <Body className="bg-white font-sans dark:bg-zinc-900">
           <Container className="mx-auto my-10 w-full max-w-xl px-3">

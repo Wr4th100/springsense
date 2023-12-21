@@ -13,8 +13,8 @@ import { Text } from "@react-email/text";
 const LocationEmail = () => {
   return (
     <Tailwind>
-      <Head />
       <Html>
+        <Head />
         <Preview>IoT Alert: Location Mismatch</Preview>
         <Body className="bg-white font-sans dark:bg-zinc-900">
           <Container className="mx-auto my-10 w-full max-w-xl px-3">
