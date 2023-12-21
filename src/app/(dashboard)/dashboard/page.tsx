@@ -6,14 +6,15 @@ import React from "react";
 import { motion } from "framer-motion";
 import { api } from "@/trpc/react";
 import slugify from "slugify";
-import MainMapCover from "@/components/MainMapCover";
+import dynamic from "next/dynamic";
 
-export const dynamic = "force-dynamic"
+const MainMapCover = dynamic(() => import("@/components/MainMapCover"), {
+  ssr: false,
+});
 
 const DashboardPage = () => {
   const springs = api.spring.findAllSprings.useQuery();
   const activeSensors = api.spring.noOfActiveSensors.useQuery();
-
 
   return (
     <div className="flex w-full flex-col lg:flex-row">
